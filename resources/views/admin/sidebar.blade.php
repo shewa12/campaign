@@ -4,6 +4,19 @@
           <div class="menu_section">
                 
             <ul class="nav side-menu">
+              <?php $role= Auth::user()->role;?>
+              <?php if($role===1):?>
+                  <li><a href="{{route('campaign')}}"><i class="fas fa-user-alt"></i> Campaign</a>
+                  </li>
+              <?php endif;?>              
+
+              <?php if($role===2):?>
+                  <li><a href="{{route('employee')}}"><i class="fas fa-user-alt"></i> Employee</a>
+                  </li>              
+              <?php endif;?>              
+
+              <?php if($role===3):?>
+              
                   <li><a href="{{route('users')}}"><i class="fas fa-user-alt"></i> Technician</a>
                   </li>
                   <li><a href="{{route('appUsers')}}"><i class="fas fa-users"></i> Users</a>
@@ -18,9 +31,7 @@
                   <li>
                     <a href="{{route('getLocations')}}"><i class="fas fa-map-marker-alt"></i> Locations</a>
                   </li>
-                
-
-    
+              <?php endif;?>  
               </ul>
              
               </div>

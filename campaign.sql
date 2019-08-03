@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2018 at 11:38 AM
+-- Generation Time: Aug 03, 2019 at 07:03 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dashboard`
+-- Database: `campaign`
 --
 
 -- --------------------------------------------------------
@@ -171,8 +171,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `image`, `image_path`, `about`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `age`, `address`, `region`, `zipCode`, `phoneNumber`, `recognitionSign`) VALUES
-(5, 'shewa', 'shewa@gmail.com', 'shewa-min.jpg', 'C:\\xampp\\tmp\\php77E7.tmp', 'Hi, I am web developer', '$2y$10$ywKW5TEdnI6z77PF6aOiUu/emjxBd.q9xlBiIbs65oF0eloFMOZFC', 'zxnj7TUXjxIJREWJ9dOX8qlSlEVyfQhZs5DSHHYn6EMLtTeYMOmyptvuCwOw', '2018-07-17 05:43:50', '2018-07-31 04:28:40', 0, 0, '', '', '', '', NULL),
-(6, 'shewa', 'shewa1234@gmail.com', 'shewa-min.jpg', 'C:\\xampp\\tmp\\phpB4E9.tmp', 'hello', 'shewa123', NULL, '2018-07-30 03:14:16', '2018-07-30 03:14:16', 1, 27, '27 dhanmondi dhaka', 'dhaka', '1200', '0099033200', 'sun glass');
+(5, 'shewa', 'shewa@gmail.com', 'IMG_20190515_152608_20190515_153219146.jpg', 'C:\\xampp\\tmp\\phpFCB1.tmp', 'Hi, I am web developer', '$2y$10$ywKW5TEdnI6z77PF6aOiUu/emjxBd.q9xlBiIbs65oF0eloFMOZFC', 'oxHuryO0zdLnbLrEU8bHF1uSkihCX9QSowwZC4w4mTJ5p9MkXUiVlYst5e6e', '2018-07-17 05:43:50', '2019-08-03 00:50:08', 3, 0, '', '', '', '', NULL),
+(6, 'shewa', 'shewa1234@gmail.com', 'shewa-min.jpg', 'C:\\xampp\\tmp\\phpB4E9.tmp', 'hello', 'shewa123', NULL, '2018-07-30 03:14:16', '2018-07-30 03:14:16', 1, 27, '27 dhanmondi dhaka', 'dhaka', '1200', '0099033200', 'sun glass'),
+(7, 'campUser', 'campaign@gmail.com', NULL, NULL, NULL, '$2y$10$xMSs8tT5.3PHp9OpxCLVxu9.wIZqX8htK93WSkrRt6LtQT9pUUM.W', NULL, '2019-08-03 10:42:37', '2019-08-03 10:42:37', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -287,7 +288,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `worklog`
 --

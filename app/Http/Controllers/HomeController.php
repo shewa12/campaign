@@ -34,11 +34,22 @@ class HomeController extends Controller
     }
     public function index()
     {
-
-
+        //getting auth user role
+        $role= Auth::user()->role;
         $title= "Dashboard";
-                        
-        return view('admin/dashboard')->with(['title'=>$title]);
+        if($role===1){
+            //if user
+            return redirect()->route('campaign');
+        }
+        if($role===2){
+            //if employee
+            return redirect()->route('employee');
+        }
+        else{
+                       
+        return view('admin/dashboard')->with(['title'=>$title]);            
+        }
+
     }
 
     function workLog(){

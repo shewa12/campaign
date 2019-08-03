@@ -105,3 +105,9 @@ Route::group(['middleware'=>['auth','employee']], function(){
 	Route::get('/employee', "Employee@index")->name('employee');
 });
 /*routes for employee end*/
+
+/*routes for campaign account users*/
+Route::group(['middleware'=>['auth','campaign']], function(){
+	Route::get('/campaign', "Campaign@index")->name('campaign');
+});
+/*routes for campaign account users end*/

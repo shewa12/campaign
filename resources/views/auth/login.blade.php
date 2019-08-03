@@ -8,13 +8,6 @@
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
                     
-                    <div class="alert-info alert">
-                        <center><strong>Demo Admin</strong></center><br>
-                       
-                        <label>User: shewa@gmail.com</label> <br>
-                        <label>Password: 123456</label>
-                        
-                    </div>
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 

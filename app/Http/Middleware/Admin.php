@@ -4,7 +4,7 @@ namespace admin\Http\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Closure;
 
-class Employee
+class Admin
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class Employee
     public function handle($request, Closure $next)
     {
             $this->user = Auth::user();
-            if($this->user->role===2){
+            if($this->user->role===3){
                 return $next($request);
             }
             else{
