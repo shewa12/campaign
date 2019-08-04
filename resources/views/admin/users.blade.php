@@ -29,72 +29,86 @@
         <!--end flass message-->
       </div>  
 
-        <div class="responsive">
-            <button class="btn-default btn btn-sm" data-toggle="modal" data-target="#addform"><i class="fas fa-plus-circle"></i>User</button>
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th>Sl No:</th>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                    <th>Age</th>
-                    <th>Region</th>
-                    <th>Zipcode</th>
-                    <th>Recognition Sign</th>
-                    <th>About</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                	<?php 
-                		$i=1;
-                	?>
+    <div class="panel-default panel">
 
-                @forelse($users as $value)
-                	<tr>
-                		<td>{{$i++}}</td>
-                    <td><img src="{{url('storage/app/avatars/')}}/{{$value->image}}" style="width:60px;height:60px;border-radius:30px;"></td>                    
-                		<td>{{$value->name}}</td>
-                		<td>{{$value->email}}</td>
-                		<td>{{$value->address}}</td>
-                		<td>{{$value->phoneNumber}}</td>
-                		<td>{{$value->age}}</td>
-                		<td>{{$value->region}}</td>
-                		<td>{{$value->zipCode}}</td>
-                    <td>{{$value->recognitionSign}}</td>
-                		<td>{{$value->about}}</td>
-                        <td> 
-                        <?php 
-                        
-                        echo 
-                        '
-                        <i class="fas fa-edit" onClick ="edit('.$value->id.',\''.$value->name.'\', \''.$value->email.'\',\''.$value->address.'\', \''.$value->phoneNumber.'\',\''.$value->age.'\',\''.$value->region.'\',\''.$value->zipCode.'\',\''.$value->recognitionSign.'\',\''.$value->password.'\')" data-toggle="modal" data-target="#editform"
-                        aria-hidden="true" style="color:green; font-size:18px;cursor:pointer;"></i>
+            <div class="panel-heading">
+              <button class="btn-default btn btn-sm" data-toggle="modal" data-target="#addform">Add employee</button>
+            </div>
 
-                        ';
-                        ?>
-                        </td>
-                        <td class="" id="dlt"><i id="delete" onClick="deleteUser({{$value->id}})" class=" fas fa-trash-alt" style="color:red; font-size:18px;cursor:pointer;"></i></td>                		
-                	</tr>
-                @empty
-                	<tr>
-                		<td>No record found</td>
-                	</tr>
-                @endforelse
-                </tbody>
-            </table>    
-        </div>      
+            <div class="panel-body">
+              <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                      <th>Sl No:</th>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Address</th>
+                      <th>Phone Number</th>
+                      
+                      <th>Region</th>
+                      <th>Zipcode</th>
+                  <!--    
+                      <th>Age</th>
+                      <th>Recognition Sign</th>
+                      <th>About</th>
+                  -->    
+                      <th>Edit</th>
+                      <th>Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php 
+                      $i=1;
+                    ?>
 
+                  @forelse($users as $value)
+                    <tr>
+                      <td>{{$i++}}</td>
+                      <td><img src="{{url('storage/app/avatars/')}}/{{$value->image}}" style="width:60px;height:60px;border-radius:30px;"></td>                    
+                      <td>{{$value->name}}</td>
+                      <td>{{$value->email}}</td>
+                      <td>{{$value->address}}</td>
+                      <td>{{$value->phoneNumber}}</td>
+                      
+                      <td>{{$value->region}}</td>
+                      <td>{{$value->zipCode}}</td>
+                  <!--    
+                      <td>{{$value->age}}</td>
+                      <td>{{$value->recognitionSign}}</td>
+                      <td>{{$value->about}}</td>
+                  -->    
+                          <td> 
+                          <?php 
+                          
+                          echo 
+                          '
+                          <i class="fas fa-edit" onClick ="edit('.$value->id.',\''.$value->name.'\', \''.$value->email.'\',\''.$value->address.'\', \''.$value->phoneNumber.'\',\''.$value->age.'\',\''.$value->region.'\',\''.$value->zipCode.'\',\''.$value->recognitionSign.'\',\''.$value->password.'\')" data-toggle="modal" data-target="#editform"
+                          aria-hidden="true" style="color:green; font-size:18px;cursor:pointer;"></i>
+
+                          ';
+                          ?>
+                          </td>
+                          <td><i id="{{$value->id}}" class=" fas fa-trash-alt delete" style="color:red; font-size:18px;cursor:pointer;"></i></td>                   
+                    </tr>
+                  @empty
+                    <tr>
+                      <td>No record found</td>
+                    </tr>
+                  @endforelse
+                  </tbody>
+              </table>  
+              </div>  
+            </div>
+
+    </div>   
 <!-- Modal for add -->
 <div class="modal fade" id="addform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add work log</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Employee</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -102,6 +116,7 @@
       <div class="modal-body">
         <form method="post" action="{{route('saveUser')}}" enctype="multipart/form-data">
               {{ csrf_field() }}
+          <input type="hidden" name="role" value="2">
           <div class="form-group">
             <label for="image">Add Image</label>
             <input type="file" class="form-control" name="image" id="image" required></input>
@@ -111,10 +126,6 @@
             <input class="form-control" name="name" id="name" required></input>
           </div>          
 
-          <div class="form-group">
-            <label for="age">Age</label>
-            <input class="form-control" name="age" id="age"></input>
-          </div>
           <div class="form-group">
             <label for="email">Email</label>
             <input class="form-control" name="email" id="email" required></input>
@@ -134,14 +145,19 @@
           </div>           
 
            <div class="form-group">
-            <label for="region">Region Number</label>
+            <label for="region">Region</label>
             <input class="form-control" name="region" id="region"></input>
           </div>           
 
            <div class="form-group">
             <label for="zipCode">Zip Code</label>
             <input class="form-control" name="zipCode" id="zipCode"></input>
-          </div>              
+          </div>
+<!--
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input class="form-control" name="age" id="age"></input>
+          </div>
 
           <div class="form-group">
             <label for="recognitionSign">Recognition Sign</label>
@@ -151,8 +167,8 @@
            <div class="form-group">
             <label for="about">About </label>
             <textarea id="about" id="about" class="form-control" name="about"></textarea>
-          </div>          
-
+          </div>   
+-->       
 
           <div class="form-group">
             <button type="submit" class="btn-default btn" id="save">Submit</button>
@@ -195,18 +211,10 @@
           </div>          
 
           <div class="form-group">
-            <label for="age">Age</label>
-            <input class="form-control" name="age" id="age"></input>
-          </div>
-          <div class="form-group">
             <label for="email">Email</label>
             <input class="form-control" name="email" id="email" required></input>
           </div>             
-
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input class="form-control" name="password" id="password" required></input>
-          </div>           
+       
           <div class="form-group">
             <label for="Address">Address</label>
             <input class="form-control" name="address" id="Address"></input>
@@ -217,7 +225,7 @@
           </div>           
 
            <div class="form-group">
-            <label for="region">Region Number</label>
+            <label for="region">Region</label>
             <input class="form-control" name="region" id="region"></input>
           </div>           
 
@@ -225,6 +233,11 @@
             <label for="zipCode">Zip Code</label>
             <input class="form-control" name="zipCode" id="zipCode"></input>
           </div>              
+<!--
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input class="form-control" name="age" id="age"></input>
+          </div>
 
           <div class="form-group">
             <label for="recognitionSign">Recognition Sign</label>
@@ -235,7 +248,7 @@
             <label for="about">About </label>
             <textarea id="about" id="about" class="form-control" name="about"></textarea>
           </div>          
-
+-->
 
           <div class="form-group">
             <button type="submit" class="btn-default btn" id="save">Submit</button>
@@ -273,29 +286,32 @@
  
 	</script>
   <script type="text/javascript">
-      function deleteUser(id){
-       
+  $(document.body).on('click', '.delete' ,function(e) {
+      if(confirm("Do you want to delete?")){
+            const id = $(this).attr('id');
+    
+    var whichtr = $(this).closest("tr");   
+//deleting 
 
-        if(confirm('Are you sure delete this data?'))
-        {
-          // ajax delete data from database
-            $.ajax({
+        // ajax delete data from database
+          $.ajax({
+            url : "<?php echo url('/delete-app-user')?>"+"/"+id,
+            type: "GET",
+            dataType: "HTML",
+            success: function(data)
+            {
+              
+              whichtr.remove(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error deleting data');
+            }
+        });
 
-              url : "http://newgen-bd.com/dashboard/delete-user/"+id,            
-              type: "GET",
-              dataType: "HTML",
-              success: function(data)
-              {
-                  alert(data);
-               $("#dlt").closest("tr").remove();
-              },
-              error: function (jqXHR, textStatus, errorThrown)
-              {
-                  alert('Error deleting data');
-              }
-          });
-
-        }
       }
+//deleting end
+      
+}); 
   </script>
 @endsection

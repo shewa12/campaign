@@ -18,7 +18,7 @@ class AppUsersCtrl extends Controller
  	function getUsers(){
  		$title= "App Users";
 		$users = User::select()
-					->where('role',0)
+					->where('role',1)
 		 			->orderBy('id','desc')
 		 			->get();
 					   
@@ -41,7 +41,7 @@ class AppUsersCtrl extends Controller
  						'name'=>$request->name,
  						
  						'email'=>$request->email,
- 						'password'=>$request->password
+ 						'password'=>bcrypt($request->password)
  						/*'age'=>$request->age,
  						'address'=>$request->address,
  						'phoneNumber'=>$request->phoneNumber,
@@ -81,8 +81,8 @@ class AppUsersCtrl extends Controller
  						'image_path'=>$request->file('image')->path(),
  						'name'=>$request->name,
  						
- 						'email'=>$request->email,
- 						'password'=>$request->password
+ 						'email'=>$request->email
+ 						
  						/*
  						'age'=>$request->age,
  						'address'=>$request->address,
@@ -95,10 +95,10 @@ class AppUsersCtrl extends Controller
  						]);
  				
  					if($user){
- 						return redirect()->route('appUsers')->with('success','User Updated Succefully!');
+ 						return redirect()->route('appUsers')->with('success','User updated!');
  					}
  					else{
- 						return redirect()->route('appUsers')->with('fail','Failed to Update User!');
+ 						return redirect()->route('appUsers')->with('fail','Update failed!');
 
  					}
  				}
@@ -116,8 +116,8 @@ class AppUsersCtrl extends Controller
  					//'image_path'=>$request->img_path,
  					'name'=>$request->name,
  					
- 					'email'=>$request->email,
- 					'password'=>$request->password
+ 					'email'=>$request->email
+ 					
  					/*
  					'age'=>$request->age,
  					'address'=>$request->address,
@@ -130,10 +130,10 @@ class AppUsersCtrl extends Controller
  				]);
 
  				if($user){
- 					return redirect()->route('appUsers')->with('success','User Updated Succefully!');
+ 					return redirect()->route('appUsers')->with('success','User updated!');
  				}
  				else{
- 					return redirect()->route('appUsers')->with('fail','User Update Failed!');
+ 					return redirect()->route('appUsers')->with('fail','User update failed!');
 
  				}
  		}

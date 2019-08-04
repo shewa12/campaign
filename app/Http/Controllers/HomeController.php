@@ -39,6 +39,7 @@ class HomeController extends Controller
         $title= "Dashboard";
         if($role===1){
             //if user
+            
             return redirect()->route('campaign');
         }
         if($role===2){
@@ -196,30 +197,30 @@ class HomeController extends Controller
 
     function updatePassword(Request $request){
 
-
         $this->validate($request, [
            'old_password' => 'required',
            'password' => 'required|min:6|confirmed',
            
             ]);
 
-         $password= Auth::user()->password ."<br>";//get pass for current user
-      
+         $password= Auth::user()->password;//get pass for current user
 
-
-        if (!Hash::check($request->old_password, $password)) {
-               return redirect()->route('changePassword')->with('fail',"Old password not matched!");
+        if (Hash::check($request->old_password, $password)) {
+                $update= User::where('id',Auth::id())
+                            ->update(['password'=>bcrypt($request->password)]);
+                if($update){
+                    return redirect()->back()->with('success',"Password updated!");
+                }    
+                else{
+                    return redirect()->back()->with('fail',"Password could not update!");
+                }                          
 
         }
 
         else{
-            $request->user()->fill([
-                'password' => Hash::make($request->password)
-            ])->save();  
-            return redirect()->route('changePassword')->with('fail',"Password Changed!");
-
-            }            
+ 
+            return redirect()->route('changePassword')->with('fail',"Old password  not matched!");
         }
-
+    }    
      
 }

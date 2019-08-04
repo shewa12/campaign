@@ -4,20 +4,25 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-3 col-md-3">
-			<?php $url= url('storage/app/avatars/');?>
-			<?php if(!empty($user->image)):?>
-			<div class="form-group">
-				<img src="{{$url.'/'.$user->image}}">
-			</div>
-			<?php else:?>
-			<div class="form-group">
-				<img src="{{$url.'/man.png'}}">
-			</div>				
-			<?php endif?>
-			<div class="detail">
-				<strong><p>Name: {{$user->name}}</p></strong>
-				<strong><p>Email: {{$user->email}}</p></strong>
-				<strong><p>About: {{$user->about}}</p></strong>
+			<div class="panel panel-default">
+				<div class="panel-heading">My Profile</div>
+				<div class="panel-body">
+					<?php $url= url('storage/app/avatars/');?>
+					<?php if(!empty($user->image)):?>
+					<div class="form-group">
+						<img src="{{$url.'/'.$user->image}}" class="img-thumbnail img-circle" >
+					</div>
+					<?php else:?>
+					<div class="form-group">
+						<img src="{{$url.'/avatar.png'}}" class="img-thumbnail img-circle">
+					</div>				
+					<?php endif?>
+					<div class="detail">
+						<strong><p>Name: {{$user->name}}</p></strong>
+						<strong><p>Email: {{$user->email}}</p></strong>
+						<strong><p>About: {{$user->about}}</p></strong>
+					</div>
+				</div>
 			</div>
 		</div>
 

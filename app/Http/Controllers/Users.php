@@ -18,41 +18,48 @@ class Users extends Controller
  	function getUsers(){
  		$title= "Users";
 		$users = User::select()
-					->where('role',1)
+					->where('role',2)
 		 			->orderBy('id','desc')
 		 			->get();
 					   
-		
  		return view('admin.users')->with(['title'=>$title,'users'=>$users]);
  	}
 
  	function saveUser(Request $request){
         $this->validate($request, [
 
-            'email' => 'required|email|max:255|unique:users',
-
+            'email' =>'required|email|max:255|unique:users',
+            'password' =>'required|min:6'
         ]);
  		if($request->hasFile('image')){
  			if($request->file('image')->isValid()){
- 				if( $request->file('image')->storeAs("avatars", $request->file('image')->getClientOriginalName())){
- 					$user= new User([
+ 				if($request->file('image')->storeAs("avatars", $request->file('image')->getClientOriginalName())){
+ 					$post=[
+
  						'image'=>$request->file('image')->getClientOriginalName(),
  						'image_path'=>$request->file('image')->path(),
  						'name'=>$request->name,
- 						'age'=>$request->age,
+ 						
  						'email'=>$request->email,
- 						'password'=>$request->password,
+ 						'password'=>bcrypt($request->password),
  						'address'=>$request->address,
  						'phoneNumber'=>$request->phoneNumber,
+ 						'role'=>$request->role,
  						'region'=>$request->region,
- 						'zipCode'=>$request->zipCode,
- 						'role'=>1,
+ 						'zipCode'=>$request->zipCode
+ 						/*
+ 						'age'=>$request->age,
  						'recognitionSign'=>$request->recognitionSign,
  						'about'=>$request->about
- 						]);
- 				
+ 						*/
+
+
+ 					];
+
+ 					$user= new User($post);
+ 					
  					if($user->save()){
- 						return redirect()->route('users')->with('success','User Added Succefully!');
+ 						return redirect()->route('users')->with('success','Employee added succefully!');
  					}
  					else{
  						return redirect()->route('users')->with('fail','Failed to Add User!');
@@ -64,9 +71,7 @@ class Users extends Controller
  					return redirect()->route('users')->with('fail','Image Is Not Valid!');
 
  			}
- 		}
-
- 		
+ 		}		
  	}
 
  	function updateUser(Request $request){
@@ -79,15 +84,18 @@ class Users extends Controller
  						'image'=>$request->file('image')->getClientOriginalName(),
  						'image_path'=>$request->file('image')->path(),
  						'name'=>$request->name,
- 						'age'=>$request->age,
+ 						
  						'email'=>$request->email,
- 						'password'=>$request->password,
+ 						
  						'address'=>$request->address,
  						'phoneNumber'=>$request->phoneNumber,
  						'region'=>$request->region,
- 						'zipCode'=>$request->zipCode,
+ 						'zipCode'=>$request->zipCode
+/*
+ 						'age'=>$request->age,
  						'recognitionSign'=>$request->recognitionSign,
  						'about'=>$request->about
+*/
  						]);
  				
  					if($user){
@@ -111,15 +119,18 @@ class Users extends Controller
  					//'image'=>$request->img,
  					//'image_path'=>$request->img_path,
  					'name'=>$request->name,
- 					'age'=>$request->age,
+ 					
  					'email'=>$request->email,
- 					'password'=>$request->password,
+ 					
  					'address'=>$request->address,
  					'phoneNumber'=>$request->phoneNumber,
  					'region'=>$request->region,
- 					'zipCode'=>$request->zipCode,
+ 					'zipCode'=>$request->zipCode
+ 					/*
+ 					'age'=>$request->age,
  					'recognitionSign'=>$request->recognitionSign,
  					'about'=>$request->about
+ 					*/
  				]);
 
  				if($user){
@@ -139,4 +150,6 @@ class Users extends Controller
  					 ->delete();
 
  	}
+
+ 	
 }

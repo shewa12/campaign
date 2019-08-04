@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class Employee extends Controller
 {
     function index(){
-    	echo "hello";
+    	$title= "Employee";
+    	return view("employee/employee",['title'=>$title]);
     }
 }

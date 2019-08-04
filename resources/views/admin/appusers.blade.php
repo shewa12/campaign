@@ -29,8 +29,14 @@
         <!--end flass message-->
       </div>  
 
-        <div class="responsive">
-            <button class="btn-default btn btn-sm" data-toggle="modal" data-target="#addform"><i class="fas fa-plus-circle"></i>User</button>
+<div class="panel-default panel">
+  <div class="panel-heading">
+      <button class="btn-default btn btn-sm" data-toggle="modal" data-target="#addform">Add user</button>
+  </div>
+
+  <div class="panel-body">
+        <div class="table-responsive">
+            
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -38,7 +44,7 @@
                     <th>Image</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Password</th>
+                    
                     <!--
                     <th>Address</th>
                     <th>Phone Number</th>
@@ -53,25 +59,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                	<?php 
-                		$i=1;
-                	?>
+                  <?php 
+                    $i=1;
+                  ?>
 
                 @forelse($users as $value)
-                	<tr>
-                		<td>{{$i++}}</td>
+                  <tr>
+                    <td>{{$i++}}</td>
                     <td><img src="{{url('storage/app/avatars/')}}/{{$value->image}}" style="width:60px;height:60px;border-radius:30px;"></td>
-                		<td>{{$value->name}}</td>
+                    <td>{{$value->name}}</td>
                     <td>{{$value->email}}</td>
-                		<td>{{$value->password}}</td>
+                    
                     <!--
-                		<td>{{$value->address}}</td>
-                		<td>{{$value->phoneNumber}}</td>
-                		<td>{{$value->age}}</td>
-                		<td>{{$value->region}}</td>
-                		<td>{{$value->zipCode}}</td>
+                    <td>{{$value->address}}</td>
+                    <td>{{$value->phoneNumber}}</td>
+                    <td>{{$value->age}}</td>
+                    <td>{{$value->region}}</td>
+                    <td>{{$value->zipCode}}</td>
                     <td>{{$value->recognitionSign}}</td>
-                		<td>{{$value->about}}</td>
+                    <td>{{$value->about}}</td>
                   -->
                         <td> 
                         <?php 
@@ -84,16 +90,20 @@
                         ';
                         ?>
                         </td>
-                        <td class="" id="dlt"><i id="delete" onClick="deleteUser({{$value->id}})" class=" fas fa-trash-alt" style="color:red; font-size:18px;cursor:pointer;"></i></td>                		
-                	</tr>
+                        <td><i id="{{$value->id}}" class=" fas fa-trash-alt delete" style="color:red; font-size:18px;cursor:pointer;"></i></td>                   
+                  </tr>
                 @empty
-                	<tr>
-                		<td>No record found</td>
-                	</tr>
+                  <tr>
+                    <td>No record found</td>
+                  </tr>
                 @endforelse
                 </tbody>
             </table>    
-        </div>      
+        </div> 
+  </div>
+
+</div>
+     
 
 <!-- Modal for add -->
 <div class="modal fade" id="addform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -181,7 +191,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update work log</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Update user</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -207,10 +217,6 @@
             <input class="form-control" name="email" id="email" required></input>
           </div>             
 
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input class="form-control" name="password" id="password" required></input>
-          </div>
 <!--redundant fields for app users            
           <div class="form-group">
             <label for="age">Age</label>
@@ -247,7 +253,7 @@
 -->
   
           <div class="form-group">
-            <button type="submit" class="btn-default btn" id="save">Submit</button>
+            <button type="submit" class="btn-default btn" id="save">Update</button>
           </div>
 
         </form>
@@ -286,29 +292,32 @@
  
 	</script>
   <script type="text/javascript">
-      function deleteUser(id){
-       
+  $(document.body).on('click', '.delete' ,function(e) {
+      if(confirm("Do you want to delete?")){
+            const id = $(this).attr('id');
+    
+    var whichtr = $(this).closest("tr");   
+//deleting 
 
-        if(confirm('Are you sure delete this data?'))
-        {
-          // ajax delete data from database
-            $.ajax({
+        // ajax delete data from database
+          $.ajax({
+            url : "<?php echo url('/delete-app-user')?>"+"/"+id,
+            type: "GET",
+            dataType: "HTML",
+            success: function(data)
+            {
+              
+              whichtr.remove(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error deleting data');
+            }
+        });
 
-              url : "http://localhost/dashboard/delete-app-user/"+id,            
-              type: "GET",
-              dataType: "HTML",
-              success: function(data)
-              {
-                  
-               $("#dlt").closest("tr").remove();
-              },
-              error: function (jqXHR, textStatus, errorThrown)
-              {
-                  alert('Error deleting data');
-              }
-          });
-
-        }
       }
+//deleting end
+      
+}); 
   </script>
 @endsection

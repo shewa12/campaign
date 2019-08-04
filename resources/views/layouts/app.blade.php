@@ -14,11 +14,11 @@
     <link href="{{url('public/css/app.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{url('public/css/custom.css')}}">
-<!--jquery box msg-->   
-  
-<link rel="stylesheet" id="theme" type="text/css" />
-<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="{{url('public/css/jquery.msgbox.css')}}">
+    <!--jquery box msg-->   
+      
+    <link rel="stylesheet" id="theme" type="text/css" />
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{url('public/css/jquery.msgbox.css')}}">
 <style type="text/css">
     .footer{position: fixed;bottom: 0;left: 0;right: 0;}
     img {width: 30%;}
@@ -71,7 +71,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        Campaign Application
+                        <img src="{{url('public/images/logo-dark.webp')}}">
                     </a>
                 </div>
 
@@ -127,7 +127,7 @@
         @yield('content')
 
         <div class="container-fluid footer">
-            <strong><center>&copy; All rights and reserved | worklog.com</center> </strong>
+            <strong><center>&copy; All rights and reserved | RankBell.com</center> </strong>
         </div>
     </div>
 

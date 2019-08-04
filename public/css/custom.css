@@ -5,3 +5,10 @@
     right: 20%;
     z-index: 1051; /* must be larger than .modal */
 }
+.navbar-brand img{
+	width: 160px;
+	height: 25px;
+}
+.help-block{
+	color: #e35b2f !important;
+}

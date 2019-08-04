@@ -25,27 +25,30 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 //Route::get('/admin', 'AdminCtrl@index');
 Route::get('/test','HomeController@test');
+Route::get('/home', 'HomeController@index')->name('home');
+/*admin routes*/
+Route::group(['middleware'=>['auth','admin']], function(){
+	
+	//employee management start
+		Route::get('/manage-employee',"Users@getUsers")->name('users');
+		Route::post('/save-employee', "Users@saveUser")->name('saveUser');
+		Route::post('/update-employee', "Users@updateUser")->name('updateUser');
+		Route::get('/delete-employee/{id}', "Users@deleteUser")->name('deleteUser')->where('id','[0-9]+');
+	//Technicain management end
 
-//Technician management start
-Route::group([],function(){
-	Route::get('/users',"Users@getUsers")->name('users');
-	Route::post('/save-user', "Users@saveUser")->name('saveUser');
-	Route::post('/update-user', "Users@updateUser")->name('updateUser');
-	Route::get('/delete-user/{id}', "Users@deleteUser")->name('deleteUser')->where('id','[0-9]+');
-});
-//Technicain management end
+	//App user management start
+		Route::get('/app-users',"AppUsersCtrl@getUsers")->name('appUsers');
+		Route::post('/save-app-user', "AppUsersCtrl@saveUser")->name('saveAppUser');
+		Route::post('/update-app-user', "AppUsersCtrl@updateUser")->name('updateAppUser');
+		Route::get('/delete-app-user/{id}', "AppUsersCtrl@deleteUser")->name('deleteAppUser')->where('id','[0-9]+');
+	//App user management end		
 
-//App user management start
-Route::group([],function(){
-	Route::get('/app-users',"AppUsersCtrl@getUsers")->name('appUsers');
-	Route::post('/save-app-user', "AppUsersCtrl@saveUser")->name('saveAppUser');
-	Route::post('/update-app-user', "AppUsersCtrl@updateUser")->name('updateAppUser');
-	Route::get('/delete-app-user/{id}', "AppUsersCtrl@deleteUser")->name('deleteAppUser')->where('id','[0-9]+');
 });
-//App user management end
+
+
 
 //Service management start
 Route::group([],function(){
@@ -83,6 +86,7 @@ Route::group([],function(){
 
 });
 //Locations management end
+/*admin routes end*/
 
 //worklog operation
 Route::get('/work-log', 'HomeController@workLog')->name('workLog');
@@ -91,6 +95,7 @@ Route::post('/update','HomeController@updateWorklog')->name('updateForm');
 Route::get('/delete/{id}',"HomeController@deleteWorklog")->name('delete');
 Route::get('/pdf',"HomeController@downloadPDF")->name('pdf');
 //worklog operation
+
 //settings start
 Route::Group([],function(){
 	Route::get('setting',"HomeController@setting")->name('setting');
@@ -102,12 +107,19 @@ Route::Group([],function(){
 
 /*routes for employee*/
 Route::group(['middleware'=>['auth','employee']], function(){
-	Route::get('/employee', "Employee@index")->name('employee');
+	Route::get('/employee-dashboard', "Employee@index")->name('employee');
 });
 /*routes for employee end*/
 
 /*routes for campaign account users*/
 Route::group(['middleware'=>['auth','campaign']], function(){
-	Route::get('/campaign', "Campaign@index")->name('campaign');
+	Route::get('/campaign-dashboard', "Campaign@index")->name('campaign');
+
+	Route::get('/campaign/create', "Campaign@createCampaign")->name('createCampaign');
+
+
+	Route::get('/campaign/faq', "Campaign@faq")->name('faq');
+
+	Route::get('/campaign/affiliate-programe', "Campaign@affiliate")->name('affiliate');
 });
 /*routes for campaign account users end*/

@@ -1,1 +1,15 @@
+requirement: https://www.youtube.com/watch?v=SBFhsoBdjxk
+
+project: https://github.com/shewa12/campaign.git
+pass: 12nn%%84923y9r9
+
 users: name, email,age,address, region, zipCode,phoneNumber, recognitionSign
+
+campaign:
+A SIN, product link, full price,
+
+keyword 1, amount of sales per day, product is on page, 
+duration
+
+perday sale * per sale price * duration
+perday sale * duration * full price
