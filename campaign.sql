@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2019 at 07:03 PM
+-- Generation Time: Aug 06, 2019 at 08:29 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
@@ -39,23 +39,65 @@ CREATE TABLE `admins` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `features`
+-- Table structure for table `campaign`
 --
 
-CREATE TABLE `features` (
-  `id` int(11) NOT NULL,
-  `service_id` int(11) UNSIGNED DEFAULT NULL,
-  `name` varchar(555) DEFAULT NULL,
+CREATE TABLE `campaign` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `employee_id` int(11) NOT NULL DEFAULT '0',
+  `asin` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `product_link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `full_price` decimal(9,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `campaign`
+--
+
+INSERT INTO `campaign` (`id`, `user_id`, `employee_id`, `asin`, `product_link`, `full_price`, `created_at`, `updated_at`) VALUES
+(6, 16, 0, 'asin', 'http://localhost', '120.00', '2019-08-05 02:56:58', '2019-08-05 02:56:58'),
+(7, 16, 0, 'asin2', 'http://localhost', '120.00', '2019-08-05 03:01:02', '2019-08-05 03:01:02'),
+(8, 16, 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:02:37', '2019-08-05 03:02:37'),
+(9, 16, 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:03:38', '2019-08-05 03:03:38'),
+(10, 16, 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:05:02', '2019-08-05 03:05:02'),
+(11, 16, 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:05:16', '2019-08-05 03:05:16'),
+(12, 16, 18, 'what is this', 'http://localhost', '10.00', '2019-08-05 03:07:54', '2019-08-06 10:25:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `keyword`
+--
+
+CREATE TABLE `keyword` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `campaign_id` int(11) UNSIGNED DEFAULT NULL,
+  `keyword` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `perday_sale` int(11) NOT NULL,
+  `product_page` int(11) NOT NULL,
+  `duration` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `features`
+-- Dumping data for table `keyword`
 --
 
-INSERT INTO `features` (`id`, `service_id`, `name`, `created_at`, `updated_at`) VALUES
-(3, 3, 'wash room and bath room cleaning ', '2018-07-31 01:19:13', '2018-07-31 01:19:13');
+INSERT INTO `keyword` (`id`, `campaign_id`, `keyword`, `created_at`, `updated_at`, `perday_sale`, `product_page`, `duration`) VALUES
+(4, 6, 'web design', '2019-08-05 02:56:59', '2019-08-05 02:56:59', 10, 20, '5'),
+(5, 7, 'development', '2019-08-05 03:01:02', '2019-08-05 03:01:02', 20, 200, '10'),
+(6, 7, 'software', '2019-08-05 03:01:02', '2019-08-05 03:01:02', 13, 20, '3'),
+(7, 7, 'rajeeb', '2019-08-05 03:01:02', '2019-08-05 03:01:02', 15, 25, '3'),
+(8, 8, 'web design', '2019-08-05 03:02:37', '2019-08-05 03:02:37', 10, 20, '3'),
+(9, 10, 'web design', '2019-08-05 03:05:02', '2019-08-05 03:05:02', 20, 200, '3'),
+(10, 11, 'web design', '2019-08-05 03:05:16', '2019-08-05 03:05:16', 10, 100, '3'),
+(11, 12, 'web design', '2019-08-05 03:07:54', '2019-08-05 03:07:54', 20, 20, '7'),
+(12, 12, 'web design', '2019-08-05 03:07:54', '2019-08-05 03:07:54', 1, 20, '7'),
+(13, 12, 'feroz', '2019-08-05 03:07:54', '2019-08-05 03:07:54', 2, 5, '3');
 
 -- --------------------------------------------------------
 
@@ -120,25 +162,19 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `services`
+-- Table structure for table `progress`
 --
 
-CREATE TABLE `services` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `featuers` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `services`
---
-
-INSERT INTO `services` (`id`, `name`, `created_at`, `updated_at`, `featuers`) VALUES
-(1, 'plumber', '2018-07-29 21:46:26', '2018-07-29 21:46:26', NULL),
-(3, 'Cleaner', '2018-07-30 03:15:23', '2018-07-30 03:15:23', NULL),
-(4, 'painter', '2018-07-30 03:15:34', '2018-07-30 03:15:34', NULL);
+CREATE TABLE `progress` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `keyword_id` int(11) UNSIGNED NOT NULL,
+  `date` varchar(255) NOT NULL,
+  `sale_datetime` datetime DEFAULT NULL,
+  `persone_name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `order_no` varchar(255) DEFAULT NULL,
+  `paypal` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -157,7 +193,7 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `role` tinyint(2) NOT NULL DEFAULT '1',
+  `role` int(2) NOT NULL DEFAULT '1',
   `age` int(11) DEFAULT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `region` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -171,9 +207,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `image`, `image_path`, `about`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `age`, `address`, `region`, `zipCode`, `phoneNumber`, `recognitionSign`) VALUES
-(5, 'shewa', 'shewa@gmail.com', 'IMG_20190515_152608_20190515_153219146.jpg', 'C:\\xampp\\tmp\\phpFCB1.tmp', 'Hi, I am web developer', '$2y$10$ywKW5TEdnI6z77PF6aOiUu/emjxBd.q9xlBiIbs65oF0eloFMOZFC', 'oxHuryO0zdLnbLrEU8bHF1uSkihCX9QSowwZC4w4mTJ5p9MkXUiVlYst5e6e', '2018-07-17 05:43:50', '2019-08-03 00:50:08', 3, 0, '', '', '', '', NULL),
-(6, 'shewa', 'shewa1234@gmail.com', 'shewa-min.jpg', 'C:\\xampp\\tmp\\phpB4E9.tmp', 'hello', 'shewa123', NULL, '2018-07-30 03:14:16', '2018-07-30 03:14:16', 1, 27, '27 dhanmondi dhaka', 'dhaka', '1200', '0099033200', 'sun glass'),
-(7, 'campUser', 'campaign@gmail.com', NULL, NULL, NULL, '$2y$10$xMSs8tT5.3PHp9OpxCLVxu9.wIZqX8htK93WSkrRt6LtQT9pUUM.W', NULL, '2019-08-03 10:42:37', '2019-08-03 10:42:37', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(5, 'shewa', 'shewa@gmail.com', 'shewa.jpg', 'C:\\wamp64\\tmp\\phpEFBC.tmp', 'Hi, I am web developer', '$2y$10$p5aaAxOufhccfq81EY.OjOTwT11KqfpqfKunbw12/ecwzXA8QuWSq', 'CV8fMBqZlgvbMhDNqMqHgqzCfflzXNVBabdd4qaa5fJieLVOOgNhlUG8Rbdd', '2018-07-17 05:43:50', '2019-08-05 22:22:38', 3, 0, '', '', '', '', NULL),
+(16, 'shahidul', 'shahidul@gmail.com', 'shahidul.jpg', 'C:\\wamp64\\tmp\\php7079.tmp', NULL, '$2y$10$QxDdUHuLOWDVRdeHGl5yiOz.mpQUJVBghOMG8wvuecf/zkfqs4dVO', 'lraaXous5kZg88WaS0j8Xr3PDmNR58NPiJLKFKjvOHqZlNYu6GNAKUv0Z8fp', '2019-08-04 00:46:37', '2019-08-06 10:59:33', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, 'Rajeeb', 'rajeeb@gmail.com', 'Rajib-vai.jpg', 'C:\\wamp64\\tmp\\php7BD6.tmp', NULL, '$2y$10$/VxWXSPHGF2uHFXeQ75Gj.MNFVTWVTRdFVRveNQsvDHrkeDAGrSpu', NULL, '2019-08-04 01:36:55', '2019-08-04 01:36:55', 1, NULL, '', '', '', '', NULL),
+(18, 'employee', 'employee@gmail.com', 'shewa.jpg', 'C:\\wamp64\\tmp\\php3416.tmp', NULL, '$2y$10$vkLx68egjWk46nTbVROjpefm.Cr//9zgkbcSvggD6Tw6j1GWFziC6', 'MVirVXay75TNBC5snufd7w1nSv9AZ2kOQOikoRjw3Z0uNhvL9z8ldBroEmM6', '2019-08-04 02:00:38', '2019-08-06 10:57:29', 2, NULL, '', '', '', '', NULL),
+(19, 'Hamid', 'hamid@gmail.com', 'hamid.jpg', 'C:\\wamp64\\tmp\\php1E77.tmp', NULL, '$2y$10$qYvm7Vh7liLPLzaTBbMdE.qfWFnuzrTW8hnv3heTgaPFBKa7naZwS', NULL, '2019-08-04 02:01:38', '2019-08-04 02:01:38', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -210,11 +248,18 @@ ALTER TABLE `admins`
   ADD UNIQUE KEY `admins_email_unique` (`email`);
 
 --
--- Indexes for table `features`
+-- Indexes for table `campaign`
 --
-ALTER TABLE `features`
+ALTER TABLE `campaign`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_serviceId` (`service_id`);
+  ADD KEY `FK_userIdForServices` (`user_id`);
+
+--
+-- Indexes for table `keyword`
+--
+ALTER TABLE `keyword`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_serviceId` (`campaign_id`);
 
 --
 -- Indexes for table `locations`
@@ -236,10 +281,11 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_token_index` (`token`);
 
 --
--- Indexes for table `services`
+-- Indexes for table `progress`
 --
-ALTER TABLE `services`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `progress`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `keyword_id` (`keyword_id`);
 
 --
 -- Indexes for table `users`
@@ -265,10 +311,15 @@ ALTER TABLE `worklog`
 ALTER TABLE `admins`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `features`
+-- AUTO_INCREMENT for table `campaign`
 --
-ALTER TABLE `features`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `campaign`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `keyword`
+--
+ALTER TABLE `keyword`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `locations`
 --
@@ -280,15 +331,15 @@ ALTER TABLE `locations`
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
--- AUTO_INCREMENT for table `services`
+-- AUTO_INCREMENT for table `progress`
 --
-ALTER TABLE `services`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `progress`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `worklog`
 --
@@ -299,10 +350,22 @@ ALTER TABLE `worklog`
 --
 
 --
--- Constraints for table `features`
+-- Constraints for table `campaign`
 --
-ALTER TABLE `features`
-  ADD CONSTRAINT `fk_serviceId` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`);
+ALTER TABLE `campaign`
+  ADD CONSTRAINT `FK_userIdForServices` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `keyword`
+--
+ALTER TABLE `keyword`
+  ADD CONSTRAINT `fk_serviceId` FOREIGN KEY (`campaign_id`) REFERENCES `campaign` (`id`);
+
+--
+-- Constraints for table `progress`
+--
+ALTER TABLE `progress`
+  ADD CONSTRAINT `progress_ibfk_1` FOREIGN KEY (`keyword_id`) REFERENCES `keyword` (`id`);
 
 --
 -- Constraints for table `worklog`

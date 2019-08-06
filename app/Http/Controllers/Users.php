@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;//auth for get logged in info
 use Illuminate\Http\UploadedFile;//for upload files
 
 use admin\User;//user model
+use admin\Campaign;//user model
 class Users extends Controller
 {
 	function __construct(){
@@ -17,16 +18,30 @@ class Users extends Controller
 	}
  	function getUsers(){
  		$title= "Users";
+
+					   
+ 		return view('admin.users')->with(['title'=>$title,'users'=>$this->getAllusers()]);
+ 	}
+
+ 	function getAllusers(){
 		$users = User::select()
 					->where('role',2)
 		 			->orderBy('id','desc')
-		 			->get();
-					   
- 		return view('admin.users')->with(['title'=>$title,'users'=>$users]);
+		 			->get(); 
+		return $users;	 					
+ 	} 	
+
+ 	function userDetail($id){
+ 		$title="Employee Detail";
+		$user = User::where('id',$id)
+		 			 ->first(); 
+		
+		return view('admin.employee_detail',['title'=>$title,'user'=>$user]);	 					
  	}
 
  	function saveUser(Request $request){
         $this->validate($request, [
+
 
             'email' =>'required|email|max:255|unique:users',
             'password' =>'required|min:6'
@@ -151,5 +166,14 @@ class Users extends Controller
 
  	}
 
- 	
+ 	function asignUser(Request $request){
+ 		$q= Campaign::where('id',$request->campaign_id)
+ 				->update(['employee_id'=>$request->employee_id]);
+ 		if($q){
+ 			return redirect()->back()->with('success',"Employee asigned succefully!");
+ 		}			
+ 		else{
+ 			return redirect()->back()->with('fail',"Employee asign failed!");
+ 		}
+ 	}
 }

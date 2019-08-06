@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{url('public/css/jquery.msgbox.css')}}">
 <style type="text/css">
     .footer{position: fixed;bottom: 0;left: 0;right: 0;}
-    img {width: 30%;}
+
 </style>
 <script type="text/javascript">
     var theme = location.href.split(/\?/)[1];
@@ -71,7 +71,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{url('public/images/logo-dark.webp')}}">
+                        <img src="{{url('public/images/logo.svg')}}">
                     </a>
                 </div>
 

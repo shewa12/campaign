@@ -4,9 +4,9 @@ namespace admin;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Features extends Model
+class Progress extends Model
 {
     //table name
-    public $table= "features";
+    public $table= "progress";
     protected $guarded= [];
 }

@@ -39,7 +39,42 @@
       			</div>
 
       			<div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Sl No:</th>
+                        <th>A SIN</th>
+                        <th>Product Link</th>
+                        <th>Full Price</th>
+                        <th>View Detail</th>
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <?php 
+                        $i=1;
+                      ?>
 
+                    @forelse($campaigns as $value)
+                      <tr>
+                        <td>{{$i++}}</td>
+                        <td>{{$value->asin}}</td>
+                        <td>{{$value->product_link}}</td>
+                        <td>{{$value->full_price}}</td>
+                        <td><a href="{{url('asigned-campaign/detail')}}/{{$value->id}}" class="btn-primary btn btn-sm">View Detail</a></td>
+                        
+                      </tr>
+                    @empty
+                      <tr>
+                        <td>No record found</td>
+                      </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+                {{$campaigns->links()}}
+
+              </div>
       			</div>
       		</div>
       	</div>

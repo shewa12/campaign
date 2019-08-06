@@ -3,7 +3,7 @@
 @section('content')
     <div class="right_col" role="main">
 
-		<div class="row">
+    <div class="row">
         <!--flass message-->
         @if (count($errors) > 0)
             <div class="alert alert-danger">
@@ -28,17 +28,17 @@
             </div>
         @endif
         
-      	</div>     
-      	<!--end flass message-->
-      	<div class="clearfix"></div>
-      	<!--body-->
-      	<div class="row">
-      		<div class="panel-default panel">
-      			<div class="panel-heading">
-      				<a href="{{route('createCampaign')}}" class="btn-primary btn btn-sm"> Create new campaign</a>
-      			</div>
+        </div>     
+        <!--end flass message-->
+        <div class="clearfix"></div>
+        <!--body-->
+        <div class="row">
+          <div class="panel-default panel">
+            <div class="panel-heading">
+              <a href="{{route('createCampaign')}}" class="btn-primary btn btn-sm"> Create new campaign</a>
+            </div>
 
-      			<div class="panel-body">
+            <div class="panel-body">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead>
@@ -48,6 +48,7 @@
                         <th>Product Link</th>
                         <th>Full Price</th>
                         <th>View Detail</th>
+                        <th>Asign Employee</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,6 +63,9 @@
                         <td>{{$value->product_link}}</td>
                         <td>{{$value->full_price}}</td>
                         <td><a href="{{url('campaign/detail/')}}/{{$value->id}}" class="btn-primary btn btn-sm">View Detail</a></td>
+                        <td>
+                            <button class="btn-info btn btn-sm">Asign</button>
+                        </td>
                       </tr>
                     @empty
                       <tr>
@@ -72,9 +76,9 @@
                 </table>
                 {{$campaigns->links()}}
               </div>
-      			</div>
-      		</div>
-      	</div>
-      	<!--body end-->
-  	</div>
+            </div>
+          </div>
+        </div>
+        <!--body end-->
+    </div>
 @endsection

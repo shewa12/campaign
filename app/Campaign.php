@@ -4,9 +4,9 @@ namespace admin;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserServices extends Model
+class Campaign extends Model
 {
     //table name
-    public $table= "services";
+    public $table= "campaign";
     protected $guarded= [];
 }

@@ -35,7 +35,7 @@
         <div class="row">
           <div class="panel-default panel">
             <div class="panel-heading">
-              <strong>All campaigns</strong>
+              <button class="btn btn-primary">Add Sale</strong>
             </div>
 
             <div class="panel-body">
@@ -43,42 +43,35 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>Sl No:</th>
-                        <th>A SIN</th>
-                        <th>Product Link</th>
-                        <th>Full Price</th>
-                        <th>View Detail</th>
-                        <th>Asign Employee</th>
+                        <th>Keyword</th>
+                        <th>Sale Needed</th>
+                        <th>Product on Page</th>
+                        <th>Duration</th>
+                        <th>Sales Completed</th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                     <tbody>
-                      <?php 
-                        $i=1;
-                      ?>
 
-                    @forelse($campaigns as $value)
                       <tr>
-                        <td>{{$i++}}</td>
-                        <td>{{$value->asin}}</td>
-                        <td>{{$value->product_link}}</td>
-                        <td>{{$value->full_price}}</td>
-                        <td><a href="{{url('campaign-detail/')}}/{{$value->id}}" class="btn-primary btn btn-sm">View Detail</a></td>
+                        <td>{{$keyword->keyword}}</td>
+                        <td>{{$keyword->perday_sale}}</td>
+                        <td>{{$keyword->product_page}}</td>
+                        <td>{{$keyword->duration}}</td>
+                        <td>{{$saleCount}}</td>
                         <td>
-                          @if($value->employee_id==0)
-                          <button data-toggle="modal"data-target="#asign" id="{{$value->id}}" class="asign btn-sm btn btn-info">Asign</button>
+                          @if($keyword->perday_sale*$keyword->duration==$saleCount)
+                            <button class="btn btn-sm btn-success">Completed</button>
                           @else
-                          <a href="{{url('/employee-detail')}}/{{$value->userId}}" class="text-capitalize"><strong>{{$value->name}}</strong></a>
-                          @endif
+                             <button class="btn btn-sm btn-warning">Inprogress</button>
+                          @endif   
                         </td>
+
                       </tr>
-                    @empty
-                      <tr>
-                        <td>No record found</td>
-                      </tr>
-                    @endforelse
+
                     </tbody>
                 </table>
-                {{$campaigns->links()}}
+                
               </div>
             </div>
           </div>
@@ -94,20 +87,9 @@
         <h4 class="modal-title">Asign employee to campaign</h4>
       </div>
         <div class="modal-body">
-          <form class="form-horizontal modal-form" id="loginForm" method="post" action="{{route('asignEmployee')}}">
+          <form class="form-horizontal modal-form" id="loginForm" method="post" action="">
             {{csrf_field()}}
-            <input type="hidden" name="campaign_id">
-            <div class="form-group">
-                <label>Select Employee</label>
-                <select class="form-control" name="employee_id" required>
-                  <option select="">Select</option>
-                  @forelse($employee as $value)
-                    <option value="{{$value->id}}">{{$value->name}}-{{$value->email}}</option>
-                  @empty()
-                    <option>No employee found</option> 
-                  @endforelse   
-                </select>
-            </div>
+
             <div class="form-group">
                   <button type="submit" class="btn btn-primary">Asign Employee</button>
             </div>
@@ -124,10 +106,6 @@
 
 @section('js')
 <script type="text/javascript">
-  $(document.body).on('click','.asign',function(){
-      
-      var id= $(this).attr('id');
-      $("[name='campaign_id']").val(id);
-  })
+
 </script>
 @endsection

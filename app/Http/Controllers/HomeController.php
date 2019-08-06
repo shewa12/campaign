@@ -11,6 +11,8 @@ use Illuminate\Http\UploadedFile;//for file upload
 use admin\Worklog ;
 use admin\User;
 use PDF;
+use admin\Http\Controllers\CampaignAdmin as camp;
+use admin\Http\Controllers\Users;
 class HomeController extends Controller
 {
     
@@ -47,8 +49,10 @@ class HomeController extends Controller
             return redirect()->route('employee');
         }
         else{
-                       
-        return view('admin/dashboard')->with(['title'=>$title]);            
+            $employee= new Users;
+            $camp= new camp; 
+                     
+            return view('admin/dashboard')->with(['title'=>$title,'campaigns'=>$camp->getCampaigns(),'employee'=>$employee->getAllusers()]);            
         }
 
     }

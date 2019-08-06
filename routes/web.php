@@ -31,13 +31,19 @@ Route::get('/test','HomeController@test');
 Route::get('/home', 'HomeController@index')->name('home');
 /*admin routes*/
 Route::group(['middleware'=>['auth','admin']], function(){
-	
+	//campaign start
+	Route::get('/campaign', "CampaignAdmin@index")->name('campaignAdmin');
+
+	Route::get('/campaign-detail/{camp_id}', "CampaignAdmin@getKeywordForCamp")->name('campaignDetailAdmin')->where('camp_id','[0-9]+');		
+	//campaign end
 	//employee management start
 		Route::get('/manage-employee',"Users@getUsers")->name('users');
+		Route::get('/employee-detail/{id}',"Users@userDetail")->name('userDetail')->where('id','[0-9]+');
 		Route::post('/save-employee', "Users@saveUser")->name('saveUser');
 		Route::post('/update-employee', "Users@updateUser")->name('updateUser');
 		Route::get('/delete-employee/{id}', "Users@deleteUser")->name('deleteUser')->where('id','[0-9]+');
-	//Technicain management end
+		Route::post('/asign-employee',"Users@asignUser")->name('asignEmployee');
+	//employee management end
 
 	//App user management start
 		Route::get('/app-users',"AppUsersCtrl@getUsers")->name('appUsers');
@@ -49,43 +55,6 @@ Route::group(['middleware'=>['auth','admin']], function(){
 });
 
 
-
-//Service management start
-Route::group([],function(){
-	Route::get('/services',"ServicesCtrl@getServices")->name('getServices');
-	
-	Route::post('/save-service', "ServicesCtrl@saveService")->name('saveService');
-	Route::post('/update-service', "ServicesCtrl@updateService")->name('updateService');
-	Route::get('/delete-service/{id}', "ServicesCtrl@deleteService")->name('deleteService')->where('id','[0-9]+');
-
-});
-//Service management end
-
-//Features management start
-Route::group([],function(){
-	Route::get('/features',"FeaturesCtrl@getFeatures")->name('getFeatures');
-	
-	Route::post('/save-feature', "FeaturesCtrl@saveFeature")->name('saveFeature');
-
-	Route::post('/update-feature', "FeaturesCtrl@updateFeature")->name('updateFeature');
-
-	Route::get('/delete-feature/{id}', "FeaturesCtrl@deleteFeature")->name('deleteFeature')->where('id','[0-9]+');
-
-});
-//Features management end
-
-//Locations management start
-Route::group([],function(){
-	Route::get('/locations',"LocationCtrl@getLocations")->name('getLocations');
-	
-	Route::post('/save-location', "LocationCtrl@saveLocation")->name('saveLocation');
-
-	Route::post('/update-location', "LocationCtrl@updateLocation")->name('updateLocation');
-
-	Route::get('/delete-location/{id}', "LocationCtrl@deleteLocation")->name('deleteLocation')->where('id','[0-9]+');
-
-});
-//Locations management end
 /*admin routes end*/
 
 //worklog operation
@@ -107,7 +76,9 @@ Route::Group([],function(){
 
 /*routes for employee*/
 Route::group(['middleware'=>['auth','employee']], function(){
-	Route::get('/employee-dashboard', "Employee@index")->name('employee');
+	Route::get('/asigned-campaign', "Employee@index")->name('employee');
+	Route::get('/asigned-campaign/detail/{camp_id}', "Employee@employeeCampaign")->name('employeeCampaign')->where('camp_id','[0-9]+');
+	Route::get('/manage-sales/{keyword_id}', "Employee@manageSales")->name('manageSales')->where('keyword_id','[0-9]+');	
 });
 /*routes for employee end*/
 
@@ -115,7 +86,11 @@ Route::group(['middleware'=>['auth','employee']], function(){
 Route::group(['middleware'=>['auth','campaign']], function(){
 	Route::get('/campaign-dashboard', "Campaign@index")->name('campaign');
 
+	Route::get('/campaign/detail/{camp_id}', "Campaign@getKeywordForCamp")->name('campaignDetail')->where('camp_id','[0-9]+');
+
 	Route::get('/campaign/create', "Campaign@createCampaign")->name('createCampaign');
+
+	Route::post('/campaign/create', "Campaign@saveCampaign")->name('saveCampaign');
 
 
 	Route::get('/campaign/faq', "Campaign@faq")->name('faq');
