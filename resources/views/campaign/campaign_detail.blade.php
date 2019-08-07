@@ -76,6 +76,11 @@
                 <?php $grandTotal=[];?>
                 @forelse($keywords as $val)
                 <div class="col-xs-12 col-md-8 col-lg-6">
+                  @if(Auth::id()===1)
+                  <a href="{{url('campaign/sales')}}/{{$val->id}}" class="btn-primary btn btn-sm">View Sales</a>
+                  @else
+                  <a href="{{url('home/sales')}}/{{$val->id}}" class="btn-primary btn btn-sm">View Sales</a>
+                  @endif
                   <table class="table-bordered table">
                       
                         <tbody>

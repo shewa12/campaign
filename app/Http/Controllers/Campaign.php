@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use admin\Campaign as camp ;
 use admin\Keyword;
+use admin\Progress;
 
 class Campaign extends Controller
 {
@@ -114,6 +115,32 @@ class Campaign extends Controller
         if($q->save()){
             return true;
         }
+    }
+
+    function campaignSales($keyword_id){
+        $title ="Campaign Sale";
+        $saleCount= $this->countSaleAsperKeyword($keyword_id);
+        $keyword= $this->keywordDetail($keyword_id);
+        $progress= $this->getProgressForKeyword($keyword_id);
+
+        return view('campaign.campaign_sales',['title'=>$title ,'saleCount'=>$saleCount,'keyword'=>$keyword,'progress'=>$progress]);
+
+    } 
+
+    function countSaleAsperKeyword($keyword_id){
+        $q= Progress::where('keyword_id',$keyword_id)->get();
+        return count($q);
+    }   
+
+    function getProgressForKeyword($keyword_id){
+        $q= Progress::where('keyword_id',$keyword_id)
+                    ->paginate(10);
+        return $q;
+    }
+
+    function keywordDetail($keyword_id){
+        $q= Keyword::where('id',$keyword_id)->first();
+        return $q;
     }
 
     function faq(){

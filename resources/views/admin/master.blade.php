@@ -55,7 +55,9 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="" class="site_title"><i class="fa fa-paw"></i> <span>Dashboard</span></a>
+              <a href="{{url('/')}}" class="site_title">
+                <img src="{{url('public/images/logo-light.webp')}}" width="150px;">
+              </a>
             </div>
 
             <div class="clearfix"></div>
@@ -206,7 +208,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            &copy; All Rights & Reserved <a href="{{url('')}}">Worklog</a>
+            &copy; All Rights & Reserved RankBell
           </div>
           <div class="clearfix"></div>
         </footer>

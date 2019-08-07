@@ -35,7 +35,7 @@
         <div class="row">
           <div class="panel-default panel">
             <div class="panel-heading">
-              <button class="btn btn-primary addSale" id="{{$keyword->id}}" data-target="#addSale" data-toggle="modal">Add Sale</button>
+              <strong>Keyword</strong>
             </div>
 
             <div class="panel-body">
@@ -78,7 +78,7 @@
           <!--progress detail-->
           <div class="panel-default panel">
             <div class="panel-heading">
-              <strong>Sales completed for above keyword</strong>
+              <strong>Sales Status for above keyword</strong>
             </div>
 
             <div class="panel-body">
@@ -113,7 +113,7 @@
 
                       </tr>
                     @empty()
-                    <tr><td>No sale added</td></tr>  
+                    <tr><td>Sales in progress will be update soon...</td></tr>  
                     @endforelse
                     </tbody>
                 </table>

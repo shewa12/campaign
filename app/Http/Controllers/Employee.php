@@ -34,8 +34,9 @@ class Employee extends Controller
     	$title ="Manage Sale";
     	$saleCount= $this->countSaleAsperKeyword($keyword_id);
     	$keyword= $this->keywordDetail($keyword_id);
+        $progress= $this->getProgressForKeyword($keyword_id);
 
-    	return view('employee.manage_sales',['title'=>$title ,'saleCount'=>$saleCount,'keyword'=>$keyword]);
+    	return view('employee.manage_sales',['title'=>$title ,'saleCount'=>$saleCount,'keyword'=>$keyword,'progress'=>$progress]);
 
     } 
 
@@ -44,9 +45,25 @@ class Employee extends Controller
     	return count($q);
     }	
 
+    function getProgressForKeyword($keyword_id){
+        $q= Progress::where('keyword_id',$keyword_id)
+                    ->paginate(10);
+        return $q;
+    }
+
     function keywordDetail($keyword_id){
     	$q= Keyword::where('id',$keyword_id)->first();
     	return $q;
     }
 
+    function addSale(Request $request){
+        $q= new Progress($request->all('except','_token'));
+        if($q->save()){
+            return redirect()->back()->with('success','Sale created successfully!');
+        }
+        else{
+            return redirect()->back()->with('fail','Sale creation failed!');
+
+        }
+    }
 }
