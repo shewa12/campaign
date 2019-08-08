@@ -35,7 +35,13 @@
       	<div class="row">
       		<div class="panel-default panel">
       			<div class="panel-heading">
-      				<a href="{{route('createCampaign')}}" class="btn-primary btn btn-sm"> Create new campaign</a>
+      				<strong>
+                @if(Auth::user()->role===1)
+                  My Campaigns
+                @else
+                  All Campaigns
+                @endif    
+              </strong>
       			</div>
 
       			<div class="panel-body">
@@ -44,10 +50,15 @@
                     <thead>
                     <tr>
                         <th>Sl No:</th>
+                        <th>Created At</th>
+                        <th>Capaign Title</th>
                         <th>A SIN</th>
+                        <!--
                         <th>Product Link</th>
                         <th>Full Price</th>
+                      -->
                         <th>View Detail</th>
+                        <th>Payment Status</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,10 +69,21 @@
                     @forelse($campaigns as $value)
                       <tr>
                         <td>{{$i++}}</td>
+                        <td>{{$value->created_at}}</td>
+                        <td>{{$value->title}}</td>
                         <td>{{$value->asin}}</td>
+                        <!--
                         <td>{{$value->product_link}}</td>
                         <td>{{$value->full_price}}</td>
+                      -->
                         <td><a href="{{url('campaign/detail/')}}/{{$value->id}}" class="btn-primary btn btn-sm">View Detail</a></td>
+                        <td>
+                          @if($value->payment_status==0)
+                            <button class="btn-defult btn btn-sm" style="color:#f11c4c"> Pending</button>
+                          @else
+                            <i class="fas fa-check-circle"></i>
+                          @endif   
+                        </td>
                       </tr>
                     @empty
                       <tr>

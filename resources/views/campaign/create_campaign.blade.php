@@ -44,53 +44,63 @@
                   <div class="col-md-12">
                     <div class="col-md-6">
                       <div class="form-group">
+                          <label>Campaign Title</label>
+                          <input class="form-control" name="title" required value="{{old('title')}}">
+                      </div>                          
+
+                      <div class="form-group">
                           <label>A SIN</label>
-                          <input class="form-control" name="asin" required>
+                          <input class="form-control" name="asin" required value="{{old('asin')}}">
                       </div>                    
 
                       <div class="form-group">
                           <label>Link to Product</label>
-                          <input class="form-control" name="product_link" required>
+                          <input class="form-control" name="product_link" required value="{{old('product_link')}}">
                       </div>                    
 
                       <div class="form-group">
                         <label>Full Price</label>
                         <div class="input-group">
                           <div class="input-group-addon">$</div>
-                          <input type="text" class="form-control" name="full_price" placeholder="" required>
+                          <input type="text" class="form-control" name="full_price" placeholder="" required value="{{old('full_price')}}">
                           <div class="input-group-addon">.00</div>
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label>Keyword 1</label>
-                        <input class="form-control" name="keyword[]" required>
+                        <input class="form-control" name="keyword[]" required value="">
                       </div> 
 
                       <div class="form-group">
-                        <label>Sale per Day</label>
-                        <input class="form-control" name="perday_sale[]" required>
+                        <label>Amount of Sales Needed Per Day</label>
+                        <input type="number" class="form-control" name="perday_sale[]" required value="">
                       </div>                      
 
                       <div class="form-group">
-                        <label>Product on Page</label>
-                        <input class="form-control" name="product_page[]" required>
+                        <label>Product is on Page</label>
+                        <input type="number" class="form-control" name="product_page[]" required value="">
                       </div>                      
 
                       <div class="form-group">
                         <label>Duration</label>
                         <select class="form-control" name="duration[]" required>
-                            <option value="3">
-                              1 to 3 days
-                            </option>                            
                             <option value="5">
-                              3 to 5 days
+                              5 days
+                            </option>                            
+                            <option value="6">
+                              6 days
                             </option>                            
                             <option value="7">
-                              5 to 7 days
+                              7 days
                             </option>                            
-                            <option value="10">
-                              7 to 10 days
+                            <option value="8">
+                              8 days
+                            </option>                            
+                            <option value="9">
+                              9 days
+                            </option>                            <option value="10">
+                              10 days
                             </option>
                         </select>
                       </div>
@@ -132,7 +142,7 @@
   }
   function markup(i){
 
-    var markupDiv="<div class='keyword_section'<div class='form-group'><label>Keyword "+i+" <span id='remove'><i class='fas fa-window-close' style='color:red; cursor:pointer'></i></span> </label><input class='form-control' name='keyword[]' required></div><div class='form-group'><label>Sale per Day</label><input class='form-control' name='perday_sale[]' required></div><div class='form-group'><label>Product on Page</label><input class='form-control' name='product_page[]' required></div><div class='form-group'><select class='form-control' name='duration[]' required><option value='3'>1 to 3 Days</option><option value='5'>3 to 5 Days</option><option value='7'>5 to 7 Days</option><option value='10'>7 to 10 Days</option></select></div></div>";
+    var markupDiv="<div class='keyword_section'<div class='form-group'><label>Keyword "+i+" <span id='remove'><i class='fas fa-window-close' style='color:red; cursor:pointer'></i></span> </label><input class='form-control' name='keyword[]' required></div><div class='form-group'><label>Amount of Sales Needed Per Day</label><input type='number' class='form-control' name='perday_sale[]' required></div><div class='form-group'><label>Product is on Page</label><input type='number' class='form-control' name='product_page[]' required></div><div class='form-group'><label>Duration</label><select class='form-control' name='duration[]' required><option value='5'>5 days</option><option value='6'>6 days</option><option value='7'>7 days</option><option value='8'>8 days</option><option value='9'>9 days</option><option value='10'>10 days</option></select></div></div>";
     $("#markup").append(markupDiv);
   }
 

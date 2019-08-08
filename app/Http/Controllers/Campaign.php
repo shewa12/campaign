@@ -24,8 +24,9 @@ class Campaign extends Controller
 
     function saveCampaign(Request $request){
         $this->validate($request,[
+            'title'=>'required',
             'asin'=>'required',
-            'product_link'=>'required',
+            'product_link'=>'required|url',
             'full_price'=>'required|numeric',
             'keyword'=>'required',
             'perday_sale'=>'required',
@@ -35,6 +36,7 @@ class Campaign extends Controller
 
         $campaign= [
             'user_id'=>Auth::id(),
+            'title'=>$request->title,
             'asin'=>$request->asin,
             'product_link'=>$request->product_link,
             'full_price'=>$request->full_price
@@ -76,7 +78,6 @@ class Campaign extends Controller
 
     function getCampaigns($user_id){
         $q= camp::where('user_id',$user_id)
-                    ->orderBy('id','desc')
                     ->paginate(10);
                     
         return $q;

@@ -44,11 +44,16 @@
                     <thead>
                     <tr>
                         <th>Sl No:</th>
+                        <th>Created At</th>
+                        <th>Capaign Title</th>                        
                         <th>A SIN</th>
+                        <!--
                         <th>Product Link</th>
                         <th>Full Price</th>
+                      -->
                         <th>View Detail</th>
                         <th>Asign Employee</th>
+                        <th>Payment Status</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,9 +64,13 @@
                     @forelse($campaigns as $value)
                       <tr>
                         <td>{{$i++}}</td>
+                        <td>{{$value->created_at}}</td>
+                        <td>{{$value->title}}</td>
                         <td>{{$value->asin}}</td>
+                        <!--
                         <td>{{$value->product_link}}</td>
                         <td>{{$value->full_price}}</td>
+                      -->
                         <td><a href="{{url('campaign-detail/')}}/{{$value->id}}" class="btn-primary btn btn-sm">View Detail</a></td>
                         <td>
                           @if($value->employee_id==0)
@@ -70,6 +79,13 @@
                           <a href="{{url('/employee-detail')}}/{{$value->userId}}" class="text-capitalize"><strong>{{$value->name}}</strong></a>
                           @endif
                         </td>
+                        <td>
+                          @if($value->payment_status==0)
+                            <button class="btn-default btn btn-sm" style="color:#f11c4c"> Pending</button>
+                          @else
+                            <i style="color:green" class="fas fa-check-circle"></i> 
+                          @endif   
+                        </td>                        
                       </tr>
                     @empty
                       <tr>

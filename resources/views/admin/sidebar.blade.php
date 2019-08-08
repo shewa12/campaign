@@ -7,6 +7,8 @@
               <?php  $role= Auth::user()->role;?>
               <?php if($role===1):?>
                   <li><a href="{{route('campaign')}}"><i class="fas fa-rocket"></i> My Campaign</a>
+                  </li>                   
+                  <li><a href="{{route('createCampaign')}}"><i class="fas fa-plus-square"></i> Create new Campaign</a>
                   </li>                  
                   <li><a href="{{route('faq')}}"><i class="fas fa-question-circle"></i> FAQ</a>
                   </li>                  

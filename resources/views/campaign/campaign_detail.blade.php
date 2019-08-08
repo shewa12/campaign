@@ -76,7 +76,7 @@
                 <?php $grandTotal=[];?>
                 @forelse($keywords as $val)
                 <div class="col-xs-12 col-md-8 col-lg-6">
-                  @if(Auth::id()===1)
+                  @if(Auth::user()->role===1)
                   <a href="{{url('campaign/sales')}}/{{$val->id}}" class="btn-primary btn btn-sm">View Sales</a>
                   @else
                   <a href="{{url('home/sales')}}/{{$val->id}}" class="btn-primary btn btn-sm">View Sales</a>
@@ -90,11 +90,11 @@
                             <td width="30%">{{$val->keyword}}</td>
                           </tr>                        
                           <tr>
-                            <td>Sale per Day</td>
+                            <td>Amount of Sales Needed Per Day</td>
                             <td width="30%">{{$val->perday_sale}}</td>
                           </tr>                        
                           <tr>
-                            <td>Product on Page</td>
+                            <td>Product is on Page</td>
                             <td width="30%">{{$val->product_page}}</td>
                           </tr>                          
                           <tr>

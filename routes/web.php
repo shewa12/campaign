@@ -50,15 +50,12 @@ Route::group(['middleware'=>['auth','admin']], function(){
 		Route::post('/save-app-user', "AppUsersCtrl@saveUser")->name('saveAppUser');
 		Route::post('/update-app-user', "AppUsersCtrl@updateUser")->name('updateAppUser');
 		Route::get('/delete-app-user/{id}', "AppUsersCtrl@deleteUser")->name('deleteAppUser')->where('id','[0-9]+');
-
-		Route::get('/home/sales/{keyword_id}', "Campaign@campaignSales")->name('campaingSales')->where('keyword_id','[0-9]+');		
 	//App user management end		
 
 });
 
 
 /*admin routes end*/
-
 
 
 //settings start
@@ -75,7 +72,6 @@ Route::group(['middleware'=>['auth','employee']], function(){
 	Route::get('/asigned-campaign', "Employee@index")->name('employee');
 	Route::get('/asigned-campaign/detail/{camp_id}', "Employee@employeeCampaign")->name('employeeCampaign')->where('camp_id','[0-9]+');
 	Route::get('/manage-sales/{keyword_id}', "Employee@manageSales")->name('manageSales')->where('keyword_id','[0-9]+');	
-	Route::post('/add-sale',"Employee@addSale")->name('addSale');
 });
 /*routes for employee end*/
 
@@ -89,7 +85,6 @@ Route::group(['middleware'=>['auth','campaign']], function(){
 
 	Route::post('/campaign/create', "Campaign@saveCampaign")->name('saveCampaign');
 
-	Route::get('/campaign/sales/{keyword_id}', "Campaign@campaignSales")->name('campaingSales')->where('keyword_id','[0-9]+');
 
 	Route::get('/campaign/faq', "Campaign@faq")->name('faq');
 
