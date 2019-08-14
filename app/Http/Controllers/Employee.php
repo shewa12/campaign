@@ -14,13 +14,13 @@ class Employee extends Controller
 
         $q= Campaign::where('employee_id',Auth::id())
                 //->orderBy('users.id','desc')
-                ->paginate(10);    	
+                ->get();    	
     	return view("employee/employee",['title'=>$title,'campaigns'=>$q]);
     }
 
     function employeeCampaign($camp_id){
         $keywords= Keyword::where('campaign_id',$camp_id)
-                    ->orderBy('id','desc')
+                    //->orderBy('id','desc')
                     ->get();        
         $campaign= Campaign::where('id',$camp_id)
                     ->get();
@@ -57,6 +57,7 @@ class Employee extends Controller
     }
 
     function addSale(Request $request){
+        $request['order_no']= rand(10,100);
         $q= new Progress($request->all('except','_token'));
         if($q->save()){
             return redirect()->back()->with('success','Sale created successfully!');

@@ -31,10 +31,23 @@ Route::get('/test','HomeController@test');
 Route::get('/home', 'HomeController@index')->name('home');
 /*admin routes*/
 Route::group(['middleware'=>['auth','admin']], function(){
-	//campaign start
-	Route::get('/campaign', "CampaignAdmin@index")->name('campaignAdmin');
+	//faq, aff, bank start
+	Route::get('home/bank-detail',"HomeController@bankDetail")->name('bankDetail');
+	Route::get('home/affiliate',"HomeController@affiliateManage")->name('affiliateManage');
+	Route::get('home/faq',"HomeController@faqManage")->name('faqManage');
 
-	Route::get('/campaign-detail/{camp_id}', "CampaignAdmin@getKeywordForCamp")->name('campaignDetailAdmin')->where('camp_id','[0-9]+');		
+	Route::post('home/update-bank',"HomeController@updateBank")->name('updateBank');
+	Route::post('home/update-affiliate',"HomeController@updateAffiliate")->name('updateAffiliate');
+	Route::post('home/update-faq',"HomeController@updateFaq")->name('updateFaq');
+
+	//faq, aff, bank end
+
+	//campaign start
+	Route::get('/home/update-payment-status/{id}','HomeController@updatePaymentStatus')->name('paymentStatus')->where('id','[0-9]+');
+
+	Route::get('home/campaign-detail/{camp_id}', "CampaignAdmin@getKeywordForCamp")->name('campaignDetailAdmin')->where('camp_id','[0-9]+');
+	
+	Route::get('home/sales/{keyword_id}',"Campaign@campaignSales");		
 	//campaign end
 	//employee management start
 		Route::get('/manage-employee',"Users@getUsers")->name('users');
@@ -70,8 +83,12 @@ Route::Group([],function(){
 /*routes for employee*/
 Route::group(['middleware'=>['auth','employee']], function(){
 	Route::get('/asigned-campaign', "Employee@index")->name('employee');
+
 	Route::get('/asigned-campaign/detail/{camp_id}', "Employee@employeeCampaign")->name('employeeCampaign')->where('camp_id','[0-9]+');
-	Route::get('/manage-sales/{keyword_id}', "Employee@manageSales")->name('manageSales')->where('keyword_id','[0-9]+');	
+
+	Route::get('manage-sales/{keyword_id}', "Employee@manageSales")->name('manageSales')->where('keyword_id','[0-9]+');	
+
+	Route::post('add/sale', "Employee@addSale")->name('addSale');	
 });
 /*routes for employee end*/
 
@@ -80,7 +97,7 @@ Route::group(['middleware'=>['auth','campaign']], function(){
 	Route::get('/campaign-dashboard', "Campaign@index")->name('campaign');
 
 	Route::get('/campaign/detail/{camp_id}', "Campaign@getKeywordForCamp")->name('campaignDetail')->where('camp_id','[0-9]+');
-
+	Route::get('/campaign/sales/{keyword_id}',"Campaign@campaignSales");
 	Route::get('/campaign/create', "Campaign@createCampaign")->name('createCampaign');
 
 	Route::post('/campaign/create', "Campaign@saveCampaign")->name('saveCampaign');
@@ -89,5 +106,6 @@ Route::group(['middleware'=>['auth','campaign']], function(){
 	Route::get('/campaign/faq', "Campaign@faq")->name('faq');
 
 	Route::get('/campaign/affiliate-programe', "Campaign@affiliate")->name('affiliate');
+	Route::get('/campaign/bank-detail', "Campaign@bank")->name('campaignBank');
 });
 /*routes for campaign account users end*/

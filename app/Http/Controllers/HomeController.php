@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;//for file upload
 use admin\Worklog ;
 use admin\User;
+use admin\Post;
+use admin\Campaign;
 use PDF;
 use admin\Http\Controllers\CampaignAdmin as camp;
 use admin\Http\Controllers\Users;
@@ -57,64 +59,6 @@ class HomeController extends Controller
 
     }
 
-    function workLog(){
-        $title= "work-log";
-        $id= Auth::id();
-        $date= date('Y-m-d');
-        $worklog= worklog::where('user_id',$id)
-                        ->where('created_at',$date)
-                        ->orderBy('id', 'desc')
-                        ->get();        
-        return view('admin/worklog')->with(['title'=>$title,'worklog'=>$worklog]);
-    }
-
-    function saveWorklog(Request $request){
-        $date= date('Y-m-d');
-
-        $data= [
-            'hour'=>$request->hour,
-            'title'=>$request->title,
-            'description'=>$request->detail
-            ];
-        $worklog= worklog::where(['hour'=>$request->hour,'created_at'=>$date])
-            ->count();
-        if($worklog >0){
-            return redirect()->route('workLog')->with('fail',"You have aleary entered this hour!");
-        }
-        $worklog= new Worklog([
-            'user_id' => Auth::id(),//getting active id
-            'hour'=>$request->hour,
-            'title'=>$request->title,
-            'description'=>$request->detail
-            ]);
-
-        $worklog->save();
-        return redirect()->route('workLog')->with('success', "data saved successfully!");   
-      
-    }
-
-    function updateWorklog(Request $request){
-        $worklog= Worklog::where('id',$request->id)
-                          ->update(['hour'=>$request->hour,'title'=>$request->title,'description'=>$request->detail]) ;
-        if($worklog){
-
-            return redirect()->route('workLog')->with('success',"Data updated successfully!");
-        }
-        else{
-            return redirect()->route('workLog')->with('fail',"Data not updated!");
-
-        }
-    }
-    function deleteWorklog($id){
-       $worklog= Worklog::where('id', $id)
-                        ->delete();
-        if($worklog){
-            echo json_encode("Deleted");
-        }          
-        else{
-            echo json_encode("not found");
-        }      
-    }
 
     function downloadPDF(){
         $data="hello";
@@ -226,5 +170,67 @@ class HomeController extends Controller
             return redirect()->route('changePassword')->with('fail',"Old password  not matched!");
         }
     }    
-     
+    
+    function bankDetail(){
+        $title="Bank Detail";
+        $post= $this->getPost('bank');
+        return view('admin/bank_detail',['title'=>$title,'post'=>$post]);
+    } 
+
+    function affiliateManage(){
+        $title="Affiliate Manage";
+        $post= $this->getPost('affiliate');
+        return view('admin/affiliate_manage',['title'=>$title,'post'=>$post]);
+
+    }
+
+    function faqManage(){
+        $title="Faq Manage";
+        $post= $this->getPost('faq');
+        return view('admin/faq_manage',['title'=>$title,'post'=>$post]);
+
+    } 
+
+    function getPost($type){
+        $q= Post::where('type',$type)->first();
+        return $q;
+        
+    }
+    function updateBank(Request $request){
+        $q= Post::where('type','bank')
+                ->update(['content'=>$request->content]);
+        if($q){
+            return redirect()->back()->with('success',"Bank detail udpated!");
+        }         
+        else{
+            return redirect()->back()->with('fail',"Bank detail udpate failed!");
+        }
+    }     
+
+    function updateAffiliate(Request $request){
+        $q= Post::where('type','affiliate')
+                ->update(['content'=>$request->content]);
+        if($q){
+            return redirect()->back()->with('success',"Bank detail udpated!");
+        }         
+        else{
+            return redirect()->back()->with('fail',"Bank detail udpate failed!");
+        }
+    }     
+
+    function updateFaq(Request $request){
+        $q= Post::where('type','faq')
+                ->update(['content'=>$request->content]);
+        if($q){
+            return redirect()->back()->with('success',"Bank detail udpated!");
+        }         
+        else{
+            return redirect()->back()->with('fail',"Bank detail udpate failed!");
+        }
+    }
+
+    function updatePaymentStatus($id){
+        $q= Campaign::where('id',$id)
+                ->update(['payment_status'=>1]);
+    }   
 }

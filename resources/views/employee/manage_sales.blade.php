@@ -104,9 +104,9 @@
                         <td>{{$i++}}</td>
                         <td>{{$p->date}}</td>
                         <td>{{$p->sale_datetime}}</td>
+                        <td>#{{$p->order_no}}</td>
                         <td>{{$p->person_name}}</td>
                         <td>{{$p->email}}</td>
-                        <td>{{$p->order_no}}</td>
                         <td>{{$p->paypal}}</td>
                         <td>{{$p->note}}</td>
 
@@ -142,17 +142,13 @@
               <label>Date</label>
               <input type="date" class="form-control" name="date"> 
             </div>            
-
+                      
             <div class="form-group">
               <label>Timestamp</label>
-              <input type="time" class="form-control" name="sale_datetime"> 
-            </div>
-
-            <div class="form-group">
-                <label>Order No</label>
-                <input class="form-control" name="order_no" required>
+              <input type="text" id="timepicker" name="sale_datetime" class="form-control " value=""> 
             </div>            
-
+          
+          
             <div class="form-group">
                 <label>Person Name</label>
                 <input class="form-control" name="person_name" required>
@@ -187,10 +183,12 @@
 
 @section('js')
 <script type="text/javascript">
+
   $(document.body).on('click','.addSale',function(){
       
       var id= $(this).attr('id');
       $("[name='keyword_id']").val(id);
   })
+  $('#timepicker').timepicki(); 
 </script>
 @endsection

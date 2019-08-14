@@ -11,26 +11,20 @@
 
     <!-- Bootstrap -->
     <link href="{{url('public/admin/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <link rel='stylesheet' type='text/css'href="{{url('public/css/timepicki.css')}}"/>
     <!-- Font Awesome -->
 
     <link href="{{url('public/admin/css/font-awesome.min.css')}}" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="{{url('public/admin/css/nprogress.css')}}" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="{{url('public/admin/css/green.css')}}" rel="stylesheet">
-    <!-- bootstrap-progressbar -->
-    <link href="{{url('public/admin/css/bootstrap-progressbar-3.3.4.min.css')}}" rel="stylesheet">
-    <!-- JQVMap -->
-    
-    <link href="{{url('public/admin/css/jqvmap.min.css')}}" rel="stylesheet"/>
-    <!-- bootstrap-daterangepicker -->
-    <link href="{{url('public/admin/css/daterangepicker.css')}}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="{{url('public/admin/css/custom.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
-    <!--richtext css start-->
-    <link rel="stylesheet" href="{{url('public/admin/texteditor/richtext.min.css')}}">
+<!--editor js -->
+<!-- include summernote css/js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+
+<!--editor js end-->
     <link rel="stylesheet" href="{{url('public/admin/css/my.css')}}">
     <style type="text/css">
       .total,.grand-total {
@@ -46,6 +40,16 @@
         color:#f84c3b;
         font-weight: bold;
       }
+      .next {
+        padding: 0px;
+        margin: 0px;
+        border:0px;
+      }
+      @media only screen(max-width:780px ){
+          .site_title{
+            display: hidden;
+          }
+      }
     </style>
   </head>
 
@@ -55,8 +59,10 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{{url('/')}}" class="site_title">
-                <img src="{{url('public/images/logo-light.webp')}}" width="150px;">
+              <a href="{{url('/')}}" class="site_title" style="padding:0px;">
+                <center>
+                  <img src="{{url('public/images/logo-light.webp')}}" width="150px;">
+                </center>
               </a>
             </div>
 
@@ -217,45 +223,33 @@
     </div>
 
     <!-- jQuery -->
-<script type="text/javascript" src="{{url('public/admin/js/2.1.4-jquery.js')}}"></script>
-<script type="text/javascript" src="{{url('public/admin/js/bootstrap.min.js')}}"></script>
-    <!-- FastClick -->
-    <script src="{{url('public/admin/js/fastclick.js')}}"></script>
-    <!-- NProgress -->
-    <script src="{{url('public/admin/js/nprogress.js')}}"></script>
-    <!-- Chart.js -->
-    <script src="{{url('public/admin/js/Chart.min.js')}}"></script>
-    <!-- gauge.js -->
-    <script src="{{url('public/admin/js/gauge.min.js')}}"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="{{url('public/admin/js/bootstrap-progressbar.min.js')}}"></script>
-    <!-- iCheck -->
-    <script src="{{url('public/admin/js/icheck.min.js')}}"></script>
-    <!-- Skycons -->
-    <script src="{{url('public/admin/js/skycons.js')}}"></script>
-    <!-- Flot -->
-    <script src="{{url('public/admin/js/jquery.flot.js')}}"></script>
-    <script src="{{url('public/admin/js/jquery.flot.pie.js')}}"></script>
-    <script src="{{url('public/admin/js/jquery.flot.time.js')}}"></script>
-    <script src="{{url('public/admin/js/jquery.flot.stack.js')}}"></script>
-    <script src="{{url('public/admin/js/jquery.flot.resize.js')}}"></script>
-    <!-- Flot plugins -->
-    <script src="{{url('public/admin/js/jquery.flot.orderBars.js')}}"></script>
-    <script src="{{url('public/admin/js/jquery.flot.spline.min.js')}}"></script>
-    <script src="{{url('public/admin/js/curvedLines.js')}}"></script>
-    <!-- DateJS -->
-    <script src="{{url('public/admin/js/date.js')}}"></script>
-    <!-- JQVMap -->
-    <script src="{{url('public/admin/js/jquery.vmap.js')}}"></script>
-    <script src="{{url('public/admin/js/jquery.vmap.world.js')}}"></script>
-    <script src="{{url('public/admin/js/jquery.vmap.sampledata.js')}}"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="{{url('public/admin/js/moment.min.js')}}"></script>
-    <script src="{{url('public/admin/js/daterangepicker.js')}}"></script>
+    <script type="text/javascript" src="{{url('public/admin/js/2.1.4-jquery.js')}}"></script>
+
+    <script type="text/javascript" src="{{url('public/admin/js/bootstrap.min.js')}}"></script>
+<!--time picker--> 
+    <script type='text/javascript'src="{{url('public/js/timepicki.js')}}"></script>
+<!--time picker end-->  
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>   
+    <!--table sorting jquery--> 
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    
+    <!--table sorting jquery end--> 
 
     <!-- Custom Theme Scripts -->
     <script src="{{url('public/admin/js/custom.min.js')}}"></script>
+    <script type="text/javascript">
+      $("#menu_toggle").click(function(){
+        $('.site_title').animate({
+          height:'toggle'
+        },500)
+      });
 
+      $(document).ready(function() {
+          $('#example').DataTable();
+      } );      
+    </script>
     @yield('js')
 
   </body>

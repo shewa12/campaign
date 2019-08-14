@@ -7,9 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use admin\Campaign as camp ;
 use admin\Keyword;
 use admin\Progress;
+use admin\Post;
 
 class Campaign extends Controller
 {
+    function test(){
+        return 5;
+    }
     function index(){
     	$title= "Campaign";
     	return view("campaign/campaign",['title'=>$title,'campaigns'=>$this->getCampaigns(Auth::id())]);
@@ -68,7 +72,7 @@ class Campaign extends Controller
                 echo PHP_EOL;
                              
             }
-            return redirect()->route('campaign')->with('success',"Campaign created successfully!");
+            return redirect()->route('campaignBank')->with('success',"Campaign created successfully!");
         }
         else{
             return redirect()->back()->with('fail',"Campaign creation failed");
@@ -78,14 +82,14 @@ class Campaign extends Controller
 
     function getCampaigns($user_id){
         $q= camp::where('user_id',$user_id)
-                    ->paginate(10);
+                    ->get();
                     
         return $q;
     }     
 
     function getKeywordForCamp($camp_id){
         $keywords= Keyword::where('campaign_id',$camp_id)
-                    ->orderBy('id','desc')
+                    //->orderBy('id','desc')
                     ->get();        
         $campaign= camp::where('id',$camp_id)
                     ->get();
@@ -144,11 +148,20 @@ class Campaign extends Controller
         return $q;
     }
 
+    function bank(){
+        $title= "Bank Detail";
+        $bank= Post::where('type','bank')->first();
+        return view ('campaign.bank', ['title'=>$title, 'bank'=>$bank]);
+    }
     function faq(){
-    	echo "faq";
+    	$title= "FAQ";
+        $faq= Post::where('type','faq')->first();
+        return view ('campaign.faq', ['title'=>$title, 'faq'=>$faq]);
     }
 
     function affiliate(){
-    	echo "affiliate";
+        $title= "Affiliate";
+        $affiliate= Post::where('type','affiliate')->first();
+        return view ('campaign.affiliate', ['title'=>$title,'affiliate'=>$affiliate]);    
     }
 }

@@ -13,15 +13,15 @@ class CampaignAdmin extends Controller
     function getCampaigns(){
         $q= camp::select('campaign.*','users.id as userId','users.name')
                 ->leftJoin('users','users.id','=','campaign.employee_id')
-                ->orderBy('users.id','desc')
-                ->paginate(10);
+                //->orderBy('users.id','desc')
+                ->get();
                     
         return $q;
     }     
 
     function getKeywordForCamp($camp_id){
         $keywords= Keyword::where('campaign_id',$camp_id)
-                    ->orderBy('id','desc')
+                    //->orderBy('id','desc')
                     ->get();        
         $campaign= camp::where('id',$camp_id)
                     ->get();

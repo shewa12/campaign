@@ -104,9 +104,9 @@
                         <td>{{$i++}}</td>
                         <td>{{$p->date}}</td>
                         <td>{{$p->sale_datetime}}</td>
+                        <td>#{{$p->order_no}}</td>
                         <td>{{$p->person_name}}</td>
                         <td>{{$p->email}}</td>
-                        <td>{{$p->order_no}}</td>
                         <td>{{$p->paypal}}</td>
                         <td>{{$p->note}}</td>
 
@@ -134,7 +134,7 @@
         <h4 class="modal-title">Asign employee to campaign</h4>
       </div>
         <div class="modal-body">
-          <form class="form-horizontal modal-form" id="loginForm" method="post" action="{{route('addSale')}}">
+          <form class="form-horizontal modal-form" id="loginForm" method="post" action="">
             {{csrf_field()}}
             <input type="hidden" name="keyword_id" value="">
 

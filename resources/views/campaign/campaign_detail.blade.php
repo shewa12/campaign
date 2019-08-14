@@ -44,6 +44,7 @@
                     <thead>
                     <tr>
                         <th>Sl No:</th>
+                        <th>Campaign Title</th>
                         <th>A SIN</th>
                         <th>Product Link</th>
                         <th>Full Price</th>
@@ -59,6 +60,7 @@
                       <?php $fullprice= $value->full_price;?>
                       <tr>
                         <td>{{$i++}}</td>
+                        <td>{{$value->title}}</td>
                         <td>{{$value->asin}}</td>
                         <td>{{$value->product_link}}</td>
                         <td>{{$value->full_price}}</td>
@@ -102,17 +104,20 @@
                             <td width="30%">{{$val->duration}}</td>
                           </tr>
                           <tr>
-                            <td colspan="2" style="text-align:right;font-weight:bold"><span>Per day sale*duration*per sale cost(15) = 
+                            <td colspan="2" style="text-align:right;font-weight:bold">
+                            <span>Perday sale * Duration * Full price= 
+                            <?php 
+                              echo $totalTwo= $val->perday_sale*$val->duration*$fullprice;
+                              
+                            ?></span> <br>
+                            <span>Per Day Sale * Duration * Per Sale Fee(15) = 
                             <?php
                               echo $totalOne= $val->perday_sale*$val->duration*15;
                               
                             ?>
                             </span><br>
-                            <span>perday sale * duration * full price= 
-                            <?php 
-                              echo $totalTwo= $val->perday_sale*$val->duration*$fullprice;
-                              
-                            ?></span><br>
+
+                            <br>
                             <span class="total">Total: ${{$grandTotal[]= $totalOne+$totalTwo}}</span>
                             </td>
                           </tr>

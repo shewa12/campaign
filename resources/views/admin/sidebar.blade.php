@@ -12,7 +12,7 @@
                   </li>                  
                   <li><a href="{{route('faq')}}"><i class="fas fa-question-circle"></i> FAQ</a>
                   </li>                  
-                  <li><a href="{{route('affiliate')}}"><i class="fas fa-users"></i> Affilaite Program</a>
+                  <li><a href="{{route('affiliate')}}"><i class="fas fa-users"></i> Affiliate Program</a>
                   </li>
               <?php endif;?>              
 
@@ -24,12 +24,19 @@
               <?php if($role===3):?>
               
                   <li><a href="{{route('home')}}"><i class="fas fa-th"></i> Dashboard</a>
-                  <!--<li><a href="{{route('campaignAdmin')}}"><i class="fas fa-rocket"></i> Campaigns</a>
-                  </li> -->   
+                    
                   <li><a href="{{route('users')}}"><i class="fas fa-user-friends"></i> Employee</a>
                   </li>
                   <li><a href="{{route('appUsers')}}"><i class="fas fa-users"></i> Users</a>
-                  </li>
+                  </li>                  
+                  <li><a href="{{route('bankDetail')}}"><i class="fas fa-university"></i> Bank Detail</a>
+                  </li> 
+                  <li><a href="{{route('affiliateManage')}}"><i class="fas fa-users"></i> Affiliate Program</a>
+                  </li>                                   
+                  <li>
+                    <a href="{{route('faqManage')}}"><i class="fas fa-question-circle"></i> FAQ</a>
+                  </li>  
+
 
               <?php endif;?>  
               </ul>

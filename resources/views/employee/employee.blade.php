@@ -40,15 +40,17 @@
 
       			<div class="panel-body">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="example">
                     <thead>
                     <tr>
-                        <th>Sl No:</th>
-                        <th>A SIN</th>
-                        <th>Product Link</th>
-                        <th>Full Price</th>
-                        <th>View Detail</th>
-                        
+                        <th style="cursor:pointer;">Sl No: <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer;">Created at <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer;">Campaign Title <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer;">A SIN <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer;">Product Link <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer;">Full Price <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer;">View Detail <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer;">Overall Progress <i class="fas fa-arrows-alt-v pull-right"></i></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,11 +61,44 @@
                     @forelse($campaigns as $value)
                       <tr>
                         <td>{{$i++}}</td>
+                        <td>{{$value->created_at}}</td>
+                        <td>{{$value->title}}</td>
                         <td>{{$value->asin}}</td>
                         <td>{{$value->product_link}}</td>
                         <td>{{$value->full_price}}</td>
                         <td><a href="{{url('asigned-campaign/detail')}}/{{$value->id}}" class="btn-primary btn btn-sm">View Detail</a></td>
-                        
+                        <td>
+                          <?php 
+                          
+                           $c_id= $value->id;
+                           $query= DB::select(DB::raw(
+                            "SELECT id, SUM(perday_sale) ts, SUM(duration) as td FROM keyword WHERE campaign_id=$c_id "));
+                           //$k_w= \admin\Keyword::where('campaign_id',$c_id)->count('');
+                           foreach($query as $v){
+
+                            $totalSaleNeed= $v->ts*$v->td;
+                            if($totalSaleNeed>0){
+
+                            $k_id= $v->id;
+                            $complete= DB::table('progress')->where('keyword_id',$k_id)->count();
+                              $progress= 100*$complete/$totalSaleNeed;             
+                              $p= number_format((float)$progress,'2','.','')."%";
+                              echo 
+                              '
+                              <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$p.'" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;width: '.$p.'" data-toggle="tooltip" title="'.$p.'">
+                                  '.$p.' 
+                                </div>
+                              </div>
+                              ' ;               
+                            }
+                            else{
+                              echo "No keyword";
+                            }
+
+                           }
+                          ?>
+                        </td>
                       </tr>
                     @empty
                       <tr>
@@ -72,7 +107,7 @@
                     @endforelse
                     </tbody>
                 </table>
-                {{$campaigns->links()}}
+                
 
               </div>
       			</div>

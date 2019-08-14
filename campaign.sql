@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2019 at 08:29 PM
+-- Generation Time: Aug 13, 2019 at 05:55 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
@@ -45,6 +45,8 @@ CREATE TABLE `admins` (
 CREATE TABLE `campaign` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
+  `payment_status` tinyint(4) NOT NULL DEFAULT '0',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `employee_id` int(11) NOT NULL DEFAULT '0',
   `asin` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `product_link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -57,14 +59,17 @@ CREATE TABLE `campaign` (
 -- Dumping data for table `campaign`
 --
 
-INSERT INTO `campaign` (`id`, `user_id`, `employee_id`, `asin`, `product_link`, `full_price`, `created_at`, `updated_at`) VALUES
-(6, 16, 0, 'asin', 'http://localhost', '120.00', '2019-08-05 02:56:58', '2019-08-05 02:56:58'),
-(7, 16, 0, 'asin2', 'http://localhost', '120.00', '2019-08-05 03:01:02', '2019-08-05 03:01:02'),
-(8, 16, 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:02:37', '2019-08-05 03:02:37'),
-(9, 16, 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:03:38', '2019-08-05 03:03:38'),
-(10, 16, 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:05:02', '2019-08-05 03:05:02'),
-(11, 16, 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:05:16', '2019-08-05 03:05:16'),
-(12, 16, 18, 'what is this', 'http://localhost', '10.00', '2019-08-05 03:07:54', '2019-08-06 10:25:11');
+INSERT INTO `campaign` (`id`, `user_id`, `payment_status`, `title`, `employee_id`, `asin`, `product_link`, `full_price`, `created_at`, `updated_at`) VALUES
+(6, 16, 0, '', 18, 'asin', 'http://localhost', '120.00', '2019-08-05 02:56:58', '2019-08-10 03:19:45'),
+(7, 16, 0, '', 0, 'asin2', 'http://localhost', '120.00', '2019-08-05 03:01:02', '2019-08-05 03:01:02'),
+(8, 16, 0, '', 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:02:37', '2019-08-05 03:02:37'),
+(9, 16, 0, '', 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:03:38', '2019-08-05 03:03:38'),
+(10, 16, 0, '', 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:05:02', '2019-08-05 03:05:02'),
+(11, 16, 0, '', 0, 'asin', 'http://localhost', '10.00', '2019-08-05 03:05:16', '2019-08-05 03:05:16'),
+(12, 16, 0, '', 18, 'what is this', 'http://localhost', '10.00', '2019-08-05 03:07:54', '2019-08-06 10:25:11'),
+(13, 16, 0, '', 0, 'ASIN', 'http://facebook', '20.00', '2019-08-08 12:07:39', '2019-08-08 12:07:39'),
+(14, 16, 1, 'Test title', 18, 'ASIN', 'http://facebok.com', '343.00', '2019-08-10 03:24:19', '2019-08-10 04:43:57'),
+(15, 16, 0, 'Youtube camp', 0, 'test asin', 'http://youtube.com', '10.00', '2019-08-10 11:12:24', '2019-08-10 11:12:24');
 
 -- --------------------------------------------------------
 
@@ -97,7 +102,10 @@ INSERT INTO `keyword` (`id`, `campaign_id`, `keyword`, `created_at`, `updated_at
 (10, 11, 'web design', '2019-08-05 03:05:16', '2019-08-05 03:05:16', 10, 100, '3'),
 (11, 12, 'web design', '2019-08-05 03:07:54', '2019-08-05 03:07:54', 20, 20, '7'),
 (12, 12, 'web design', '2019-08-05 03:07:54', '2019-08-05 03:07:54', 1, 20, '7'),
-(13, 12, 'feroz', '2019-08-05 03:07:54', '2019-08-05 03:07:54', 2, 5, '3');
+(13, 12, 'feroz', '2019-08-05 03:07:54', '2019-08-05 03:07:54', 2, 5, '3'),
+(14, 13, 'ad center', '2019-08-08 12:07:39', '2019-08-08 12:07:39', 12, 33, '5'),
+(15, 14, 'fdsf', '2019-08-10 03:24:19', '2019-08-10 03:24:19', 343, 343, '5'),
+(16, 15, 'Youtube', '2019-08-10 11:12:25', '2019-08-10 11:12:25', 5, 244, '5');
 
 -- --------------------------------------------------------
 
@@ -162,6 +170,30 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `content` longtext,
+  `type` varchar(255) NOT NULL,
+  `created_at` date DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `title`, `content`, `type`, `created_at`, `updated_at`) VALUES
+(4, NULL, '<p><b>Account No: 70957820830989</b></p><p><b>Account Name: Shewa</b></p><p><b>Account Type: Current Account</b></p><p><b>Swift Code: 3342</b></p><p><b>Branch: Mirpur 1</b><br></p>', 'bank', NULL, '2019-08-10 08:47:08'),
+(5, NULL, '<ol><li><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. </li><li>Lorem Ipsum has been the industry''s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. </li><li>It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged.<br></li></ol>', 'faq', NULL, '2019-08-10 08:38:26'),
+(6, NULL, '<p><br></p><table class="table table-bordered"><tbody><tr><td>Dummy table<br></td><td>Dummy content<br></td></tr><tr><td>testing<br></td><td>testing<br></td></tr></tbody></table><p><br></p>', 'affiliate', NULL, '2019-08-10 08:43:52');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `progress`
 --
 
@@ -169,12 +201,28 @@ CREATE TABLE `progress` (
   `id` int(11) UNSIGNED NOT NULL,
   `keyword_id` int(11) UNSIGNED NOT NULL,
   `date` varchar(255) NOT NULL,
-  `sale_datetime` datetime DEFAULT NULL,
-  `persone_name` varchar(255) DEFAULT NULL,
+  `sale_datetime` varchar(255) DEFAULT NULL,
+  `person_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `order_no` varchar(255) DEFAULT NULL,
-  `paypal` varchar(255) DEFAULT NULL
+  `paypal` varchar(255) DEFAULT NULL,
+  `note` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `progress`
+--
+
+INSERT INTO `progress` (`id`, `keyword_id`, `date`, `sale_datetime`, `person_name`, `email`, `order_no`, `paypal`, `note`, `created_at`, `updated_at`) VALUES
+(1, 4, '2019-08-10', '15:54', 'shewa', 'shewa@gmail.com', '24', '49794809283', 'firs order', '2019-08-10 11:00:36', '2019-08-10 11:00:36'),
+(2, 15, '2019-08-10', '17:03', 'shewa', 'shewa@gmail.com', '444', '4795948489', 'notes', '2019-08-10 11:03:18', '2019-08-10 11:03:18'),
+(3, 15, '2019-08-13', NULL, 'shewa', 'shewa@gmail.com', '24', '4795948489', '', '2019-08-13 08:58:33', '2019-08-13 08:58:33'),
+(4, 15, '', NULL, 'shewa', 'shewa@gmail.com', '930480', '4795948489', '', '2019-08-13 08:59:46', '2019-08-13 08:59:46'),
+(5, 4, '2019-08-13', '09:27', 'shewa', 'shewa@gmail.com', '#4444', '345355245', 'notes', '2019-08-13 15:28:08', '2019-08-13 15:28:08'),
+(6, 4, '2019-08-13', '06:41 PM', 'shewa', 'shewa@gmail.com', '#44444', '12445', 'not', '2019-08-13 15:45:24', '2019-08-13 15:45:24'),
+(7, 15, '2019-08-13', '10:50 PM', 'shewa', 'shewa@gmail.com', '69', '12445', '', '2019-08-13 15:53:11', '2019-08-13 15:53:11');
 
 -- --------------------------------------------------------
 
@@ -207,34 +255,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `image`, `image_path`, `about`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `age`, `address`, `region`, `zipCode`, `phoneNumber`, `recognitionSign`) VALUES
-(5, 'shewa', 'shewa@gmail.com', 'shewa.jpg', 'C:\\wamp64\\tmp\\phpEFBC.tmp', 'Hi, I am web developer', '$2y$10$p5aaAxOufhccfq81EY.OjOTwT11KqfpqfKunbw12/ecwzXA8QuWSq', 'CV8fMBqZlgvbMhDNqMqHgqzCfflzXNVBabdd4qaa5fJieLVOOgNhlUG8Rbdd', '2018-07-17 05:43:50', '2019-08-05 22:22:38', 3, 0, '', '', '', '', NULL),
-(16, 'shahidul', 'shahidul@gmail.com', 'shahidul.jpg', 'C:\\wamp64\\tmp\\php7079.tmp', NULL, '$2y$10$QxDdUHuLOWDVRdeHGl5yiOz.mpQUJVBghOMG8wvuecf/zkfqs4dVO', 'lraaXous5kZg88WaS0j8Xr3PDmNR58NPiJLKFKjvOHqZlNYu6GNAKUv0Z8fp', '2019-08-04 00:46:37', '2019-08-06 10:59:33', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'shewa', 'shewa@gmail.com', 'shewa.jpg', 'C:\\wamp64\\tmp\\phpEFBC.tmp', 'Hi, I am web developer', '$2y$10$p5aaAxOufhccfq81EY.OjOTwT11KqfpqfKunbw12/ecwzXA8QuWSq', 'geQPCYiosBEOFqByghkMLWKGv8MwysKdmrw1MiHSsrWcTSw5ZzZwCvQSHQVZ', '2018-07-17 05:43:50', '2019-08-13 02:57:33', 3, 0, '', '', '', '', NULL),
+(16, 'shahidul', 'shahidul@gmail.com', 'shahidul.jpg', 'C:\\wamp64\\tmp\\php7079.tmp', NULL, '$2y$10$QxDdUHuLOWDVRdeHGl5yiOz.mpQUJVBghOMG8wvuecf/zkfqs4dVO', 'AVwYElENSbegPr5R1xSr1bS7Tje6AJnYUTig1HbxbALGnSiljTK8FznSoKgM', '2019-08-04 00:46:37', '2019-08-13 02:02:51', 1, NULL, NULL, NULL, NULL, NULL, NULL),
 (17, 'Rajeeb', 'rajeeb@gmail.com', 'Rajib-vai.jpg', 'C:\\wamp64\\tmp\\php7BD6.tmp', NULL, '$2y$10$/VxWXSPHGF2uHFXeQ75Gj.MNFVTWVTRdFVRveNQsvDHrkeDAGrSpu', NULL, '2019-08-04 01:36:55', '2019-08-04 01:36:55', 1, NULL, '', '', '', '', NULL),
-(18, 'employee', 'employee@gmail.com', 'shewa.jpg', 'C:\\wamp64\\tmp\\php3416.tmp', NULL, '$2y$10$vkLx68egjWk46nTbVROjpefm.Cr//9zgkbcSvggD6Tw6j1GWFziC6', 'MVirVXay75TNBC5snufd7w1nSv9AZ2kOQOikoRjw3Z0uNhvL9z8ldBroEmM6', '2019-08-04 02:00:38', '2019-08-06 10:57:29', 2, NULL, '', '', '', '', NULL),
+(18, 'employee', 'employee@gmail.com', 'shewa.jpg', 'C:\\wamp64\\tmp\\php3416.tmp', NULL, '$2y$10$vkLx68egjWk46nTbVROjpefm.Cr//9zgkbcSvggD6Tw6j1GWFziC6', 'Yk358R5si7YgPuT7iIolDyZLBfBlNd2DHMW3Dlmj4rpSpxQstRiE2uutQhjn', '2019-08-04 02:00:38', '2019-08-13 02:02:20', 2, NULL, '', '', '', '', NULL),
 (19, 'Hamid', 'hamid@gmail.com', 'hamid.jpg', 'C:\\wamp64\\tmp\\php1E77.tmp', NULL, '$2y$10$qYvm7Vh7liLPLzaTBbMdE.qfWFnuzrTW8hnv3heTgaPFBKa7naZwS', NULL, '2019-08-04 02:01:38', '2019-08-04 02:01:38', 1, NULL, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `worklog`
---
-
-CREATE TABLE `worklog` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL,
-  `hour` varchar(55) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `description` longtext,
-  `created_at` date DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `worklog`
---
-
-INSERT INTO `worklog` (`id`, `user_id`, `hour`, `title`, `description`, `created_at`, `updated_at`) VALUES
-(3, 5, '2nd Hour', 'website security', 'fsdf', '2018-07-29', '2018-07-29 08:39:25');
 
 --
 -- Indexes for dumped tables
@@ -281,6 +306,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_token_index` (`token`);
 
 --
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `progress`
 --
 ALTER TABLE `progress`
@@ -295,13 +326,6 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- Indexes for table `worklog`
---
-ALTER TABLE `worklog`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_userid` (`user_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -314,12 +338,12 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `campaign`
 --
 ALTER TABLE `campaign`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `keyword`
 --
 ALTER TABLE `keyword`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `locations`
 --
@@ -331,20 +355,20 @@ ALTER TABLE `locations`
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT for table `progress`
 --
 ALTER TABLE `progress`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
---
--- AUTO_INCREMENT for table `worklog`
---
-ALTER TABLE `worklog`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
@@ -366,12 +390,6 @@ ALTER TABLE `keyword`
 --
 ALTER TABLE `progress`
   ADD CONSTRAINT `progress_ibfk_1` FOREIGN KEY (`keyword_id`) REFERENCES `keyword` (`id`);
-
---
--- Constraints for table `worklog`
---
-ALTER TABLE `worklog`
-  ADD CONSTRAINT `FK_userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

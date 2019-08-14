@@ -46,26 +46,28 @@
 
       			<div class="panel-body">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="example">
                     <thead>
                     <tr>
-                        <th>Sl No:</th>
-                        <th>Created At</th>
-                        <th>Capaign Title</th>
-                        <th>A SIN</th>
+                        <th style="cursor:pointer">Sl No: <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer">Created At <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer">Capaign Title <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer">A SIN <i class="fas fa-arrows-alt-v pull-right"></i></th>
                         <!--
                         <th>Product Link</th>
                         <th>Full Price</th>
                       -->
-                        <th>View Detail</th>
-                        <th>Payment Status</th>
+                        <th style="cursor:pointer">View Detail <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer">Payment Status <i class="fas fa-arrows-alt-v pull-right"></i></th>
+                        <th style="cursor:pointer">Overall Progress</th>
                     </tr>
                     </thead>
                     <tbody>
                       <?php 
+                        //$i=($campaigns->currentpage()-1)* $campaigns->perpage() + 1;;
                         $i=1;
                       ?>
-
+                    
                     @forelse($campaigns as $value)
                       <tr>
                         <td>{{$i++}}</td>
@@ -79,10 +81,42 @@
                         <td><a href="{{url('campaign/detail/')}}/{{$value->id}}" class="btn-primary btn btn-sm">View Detail</a></td>
                         <td>
                           @if($value->payment_status==0)
-                            <button class="btn-defult btn btn-sm" style="color:#f11c4c"> Pending</button>
+                            <a href="{{route('campaignBank')}}" class="btn-defult btn btn-sm" style="color:#f11c4c"> Pending</a>
                           @else
-                            <i class="fas fa-check-circle"></i>
+                            <i style="color:green;font-size:20px;" class="fas fa-check-circle"></i>
                           @endif   
+                        </td>
+                        <td>
+                          <?php 
+                          
+                           $c_id= $value->id;
+                           $query= DB::select(DB::raw(
+                            "SELECT id, SUM(perday_sale) ts, SUM(duration) as td FROM keyword WHERE campaign_id=$c_id "));
+                           //$k_w= \admin\Keyword::where('campaign_id',$c_id)->count('');
+                           foreach($query as $v){
+
+                            $totalSaleNeed= $v->ts*$v->td;
+                            if($totalSaleNeed>0){
+
+                            $k_id= $v->id;
+                            $complete= DB::table('progress')->where('keyword_id',$k_id)->count();
+                              $progress= 100*$complete/$totalSaleNeed;             
+                              $p= number_format((float)$progress,'2','.','')."%";
+                              echo 
+                              '
+                              <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$p.'" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;width: '.$p.'" data-toggle="tooltip" title="'.$p.'">
+                                  '.$p.' 
+                                </div>
+                              </div>
+                              ' ;               
+                            }
+                            else{
+                              echo "No keyword";
+                            }
+
+                           }
+                          ?>
                         </td>
                       </tr>
                     @empty
@@ -92,7 +126,7 @@
                     @endforelse
                     </tbody>
                 </table>
-                {{$campaigns->links()}}
+                
               </div>
       			</div>
       		</div>
