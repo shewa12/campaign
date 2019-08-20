@@ -88,9 +88,8 @@ class HomeController extends Controller
                             'email'=>$request->email,
                             'image'=>$request->img,
                             'image_path'=>$request->img_path,
-                            'about'=>$request->about,
-                            //'password'=>$request->password,
-                            'role'=>"0"
+                            'about'=>$request->about
+                           
                             ]);
 
  
@@ -112,9 +111,9 @@ class HomeController extends Controller
                         'email'=>$request->email,
                         'about'=>$request->about,
                         'image'=>$request->file('image')->getClientOriginalName(),//retrieve filename
-                        'image_path'=>$request->file('image')->path(),//retrieve file path
+                        'image_path'=>$request->file('image')->path()//retrieve file path
                         //'password'=>$request->password,
-                        'role'=>"0"
+                      
                         ]);
 
                     if($user){
@@ -134,9 +133,7 @@ class HomeController extends Controller
                  
             }            
         }
-   
-
-       
+          
     }
 //change password
     function changePassword(){
